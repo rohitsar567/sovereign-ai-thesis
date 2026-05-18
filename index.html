@@ -1574,42 +1574,43 @@ html{scroll-behavior:smooth}
 .ds-card .ds-flow > .ds-flow-arrow,.ds-v .ds-flow > .ds-flow-arrow{
   transform:rotate(90deg);align-self:center;margin:2px auto}
 
-/* ── TABLE-FITS-ONE-SCREEN AUTHORITY (PRIME DIRECTIVE, final, wins all) —
-   user: every table must fit top-to-bottom in ONE screen; columns may be as
-   wide as needed with HORIZONTAL scroll; deep cell content scrolls INSIDE
-   its own cell. Supersedes INTEGRATION OVERRIDE 4 (full natural height) —
-   beaten here with !important. ds-grid dot matrices are exempt (tiny cells). */
+/* ── TABLE SCROLL AUTHORITY (PRIME DIRECTIVE, FINAL — wins all) — user's
+   definitive spec: a table NEVER scrolls vertically and NO individual cell
+   ever scrolls (vertical OR horizontal); every cell shows its ENTIRE content,
+   tall enough AND wide enough. The ONLY scroll a table may have is ONE
+   table-level HORIZONTAL scrollbar on the wrap, for the wide-column spread.
+   Compactness is achieved by WIDE columns (less wrapping ⇒ shorter rows),
+   never by capping cell height. Supersedes every earlier table rule
+   (OVERRIDE 4 + the prior fit-one-screen cap). ds-grid dots exempt. */
 .ds-table-wrap,
 .ds-table-wrap:has(table.ds-dsp),
 .ds-table-wrap:has(table.ds-matrix),
 .ds-table-wrap:has(table.ds-deepdive),
 .ds-table-wrap:has(table.ds-stackmap),
 .ds-table-wrap:has(table.ds-grid){
-  max-height:none!important;overflow:auto!important}
-/* widen data columns so text stays readable while the table goes wide and
-   the WRAP scrolls horizontally (user: "expand the columns as much as you
-   want"). Row-label column stays compact. */
+  max-height:none!important;overflow-x:auto!important;overflow-y:visible!important;
+  overscroll-behavior-x:contain}
+/* WIDE columns: each data cell is wide enough that its full content fits in a
+   few lines (short rows ⇒ compact table); the table goes very wide and the
+   ONE table-level horizontal scrollbar handles the spread. */
 .ds-table.ds-matrix:not(.ds-grid) td,.ds-table.ds-matrix th,
 .ds-table.ds-dsp td,.ds-table.ds-dsp th,
 .ds-table.ds-deepdive td,.ds-table.ds-deepdive th,
 .ds-table.ds-stackmap td,.ds-table.ds-stackmap th{
-  min-width:260px!important;width:auto!important;vertical-align:top}
+  min-width:420px!important;width:420px!important;vertical-align:top;
+  white-space:normal!important}
 .ds-table.ds-matrix .ds-rowlbl,.ds-table.ds-dsp .ds-rowlbl,
 .ds-table.ds-deepdive .ds-rowlbl,.ds-table.ds-stackmap .ds-rowlbl,
 .ds-table.ds-matrix .ds-corner,.ds-table.ds-deepdive .ds-corner,
 .ds-table.ds-stackmap .ds-corner{
-  min-width:150px!important;width:150px!important}
-/* CAP each data cell's content so a full row-set fits ~one viewport; the
-   overflow scrolls inside the cell. Applies to every non-grid table; targets
-   the cell's block wrapper (ul / .ds-cellbox / p / details). */
-.ds-table:not(.ds-grid) tbody td > ul,
-.ds-table:not(.ds-grid) tbody td > .ds-cellbox,
-.ds-table:not(.ds-grid) tbody td > .ds-list,
-.ds-table:not(.ds-grid) tbody td > p,
-.ds-table:not(.ds-grid) tbody td > div,
-.ds-table:not(.ds-grid) tbody td > details{
-  display:block!important;max-height:clamp(76px,10vh,116px)!important;
-  overflow:auto!important;overscroll-behavior:contain}
+  min-width:170px!important;width:170px!important}
+/* NO cell scroll of any kind — every cell + its inner block shows full
+   natural-height content; nothing inside a table clips or scrolls. */
+.ds-table:not(.ds-grid) tbody td,
+.ds-table:not(.ds-grid) tbody td > *,
+.ds-table:not(.ds-grid) tbody td .ds-cellbox{
+  max-height:none!important;height:auto!important;
+  overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important}
 .ds-table:not(.ds-grid) thead th{vertical-align:bottom}
 
 </style>
