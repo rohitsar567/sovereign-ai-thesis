@@ -1604,14 +1604,32 @@ html{scroll-behavior:smooth}
 .ds-table.ds-matrix .ds-corner,.ds-table.ds-deepdive .ds-corner,
 .ds-table.ds-stackmap .ds-corner{
   min-width:170px!important;width:170px!important}
-/* NO cell scroll of any kind — every cell + its inner block shows full
-   natural-height content; nothing inside a table clips or scrolls. */
+/* NO cell scroll of any kind — every cell + its TEXT wrapper shows full
+   natural-height content; nothing inside a table clips or scrolls. Scoped to
+   text-content wrappers ONLY — never `td > *` blanket and never height:auto,
+   which would collapse fixed-size ●/○ marker spans (ds-stackmap/ds-grid). */
 .ds-table:not(.ds-grid) tbody td,
-.ds-table:not(.ds-grid) tbody td > *,
+.ds-table:not(.ds-grid) tbody td > ul,
+.ds-table:not(.ds-grid) tbody td > ol,
+.ds-table:not(.ds-grid) tbody td > p,
+.ds-table:not(.ds-grid) tbody td > .ds-list,
+.ds-table:not(.ds-grid) tbody td > details,
 .ds-table:not(.ds-grid) tbody td .ds-cellbox{
-  max-height:none!important;height:auto!important;
+  max-height:none!important;
   overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important}
 .ds-table:not(.ds-grid) thead th{vertical-align:bottom}
+/* sticky row-label + corner cells MUST be fully opaque so horizontally
+   scrolled body cells never bleed through (the SUPPLY-row transparency bug:
+   its tint was rgba(...,.035)). Single opaque surface for all rows — the
+   coloured left accent bar still encodes demand/supply/policy. */
+.ds-table .ds-rowlbl,
+.ds-table thead th.ds-corner,
+.ds-table tbody th.ds-rowlbl.demand,
+.ds-table tbody th.ds-rowlbl.supply,
+.ds-table tbody th.ds-rowlbl.policy{
+  background-color:#eeeee7!important;background-image:none!important;
+  position:sticky;left:0;z-index:2}
+.ds-table thead th.ds-corner{z-index:4}
 
 </style>
 <script>
