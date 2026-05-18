@@ -1,0 +1,35 @@
+/* Canonical trajectory chart — sovereign AI thesis. Chassis tokens only. */
+.tjx-wrap{position:relative;width:100%;max-width:1040px;margin:0 auto}
+.tjx-canvas{display:block;width:100%;height:auto}
+.tjx-marker{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;
+ border:2px solid #fff;color:#fff;font-family:var(--font-mono);font-size:.74rem;font-weight:700;cursor:pointer;
+ display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(15,23,42,.25);
+ z-index:2;transition:transform .12s ease,box-shadow .12s ease}
+/* hover signposting: visible ring + lift + scale so it reads as interactive
+   without needing a click; keyboard focus mirrors it for accessibility */
+.tjx-marker:hover,.tjx-marker:focus-visible{transform:translate(-50%,-50%) scale(1.2);
+ box-shadow:0 0 0 4px rgba(15,23,42,.14),0 4px 12px rgba(15,23,42,.32);outline:none}
+.tjx-mtip{position:absolute;bottom:130%;left:50%;transform:translateX(-50%);white-space:nowrap;
+ background:#0f172a;color:#fff;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;
+ padding:5px 9px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .12s}
+.tjx-marker:hover .tjx-mtip{opacity:1}
+.tjx-legend{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;margin-top:14px;
+ font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
+.tjx-legend span{display:inline-flex;align-items:center;gap:7px}
+.tjx-swatch{width:22px;height:0;border-top:3px solid var(--accent-teal)}
+.tjx-swatch.proj{border-top:3px dashed var(--accent-amber)}
+.tjx-cap{margin-top:18px;font-family:var(--font-body);font-size:.84rem;line-height:1.7;
+ color:var(--text-secondary);max-width:1040px;margin-left:auto;margin-right:auto}
+.tjx-cap a{color:var(--accent-blue);text-decoration:underline;text-underline-offset:2px}
+/* Always-visible honesty caption under the legend — one concise muted line.
+   Surfaces the "announced, not disbursed" caveat as a visible design feature
+   rather than buried in a collapsed <details>. */
+.tjx-caption{margin:8px auto 0;max-width:1040px;text-align:center;
+ font-family:var(--font-body);font-size:.78rem;line-height:1.55;color:var(--text-dim)}
+.tjx-caption em{font-style:italic;color:var(--text-secondary);font-weight:600}
+/* .tjx-modal* styling is OWNED by the canonical design system
+   (site/_assembly_shell.html <style id="design-system"> §4.9): same overlay,
+   radius, shadow, type scale as every other modal. Not redefined here to
+   prevent drift — only the chart-specific marker/legend/caption styles live
+   in this file. */
+@media(max-width:640px){.tjx-marker{width:22px;height:22px;font-size:.66rem}}
