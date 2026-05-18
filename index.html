@@ -1596,22 +1596,30 @@ html{scroll-behavior:smooth}
    ds-stackmap is a MARKER/dot grid — it must stay COMPACT (a 420px dot-cell
    turns a 23-company map into a ~10,000px empty expanse — "all data
    missing"); ds-grid (sector dot-matrix) likewise stays at its base size. */
-.ds-table.ds-matrix:not(.ds-grid) td,.ds-table.ds-matrix:not(.ds-grid) th,
-.ds-table.ds-dsp td,.ds-table.ds-dsp th,
-.ds-table.ds-deepdive td,.ds-table.ds-deepdive th{
+/* The wide 420px rule must NEVER touch the first (label) column — only real
+   DATA cells. Excluding .ds-rowlbl/.ds-corner here is what stopped the SECTOR
+   column rendering at a useless 420px (it was outranking the narrow rule). */
+.ds-table.ds-matrix:not(.ds-grid) td:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-matrix:not(.ds-grid) th:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-dsp td:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-dsp th:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-deepdive td:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-deepdive th:not(.ds-rowlbl):not(.ds-corner){
   min-width:420px!important;width:420px!important;vertical-align:top;
   white-space:normal!important}
-/* MARKER stack map: compact columns sized for the logo+name header and the
-   centred 11px ownership dot — a tight, scannable grid (horizontal scroll
-   for the many company columns, exactly as before). */
-.ds-table.ds-stackmap td,.ds-table.ds-stackmap th{
+/* MARKER stack map: compact data columns for the logo+name header and the
+   centred 11px ownership dot (first label column excluded — handled below). */
+.ds-table.ds-stackmap td:not(.ds-rowlbl):not(.ds-corner),
+.ds-table.ds-stackmap th:not(.ds-rowlbl):not(.ds-corner){
   min-width:150px!important;width:150px!important;
   text-align:center;vertical-align:middle;white-space:normal}
-.ds-table.ds-matrix .ds-rowlbl,.ds-table.ds-dsp .ds-rowlbl,
-.ds-table.ds-deepdive .ds-rowlbl,.ds-table.ds-stackmap .ds-rowlbl,
-.ds-table.ds-matrix .ds-corner,.ds-table.ds-deepdive .ds-corner,
-.ds-table.ds-stackmap .ds-corner{
-  min-width:170px!important;width:170px!important}
+/* FIRST (label/corner) COLUMN — site-wide: only as wide as the sector/row
+   words need, wrapping to 2 lines is fine; never the wasteful 420px. One
+   tight content-hugging width for every table. */
+.ds-table th.ds-rowlbl,.ds-table td.ds-rowlbl,
+.ds-table .ds-rowlbl,.ds-table thead th.ds-corner,.ds-table .ds-corner{
+  min-width:0!important;width:210px!important;max-width:230px!important;
+  white-space:normal!important;vertical-align:top}
 /* NO cell scroll of any kind — every cell + its TEXT wrapper shows full
    natural-height content; nothing inside a table clips or scrolls. Scoped to
    text-content wrappers ONLY — never `td > *` blanket and never height:auto,
