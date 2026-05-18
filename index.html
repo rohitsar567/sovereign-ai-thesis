@@ -1590,15 +1590,23 @@ html{scroll-behavior:smooth}
 .ds-table-wrap:has(table.ds-grid){
   max-height:none!important;overflow-x:auto!important;overflow-y:visible!important;
   overscroll-behavior-x:contain}
-/* WIDE columns: each data cell is wide enough that its full content fits in a
-   few lines (short rows ⇒ compact table); the table goes very wide and the
-   ONE table-level horizontal scrollbar handles the spread. */
-.ds-table.ds-matrix:not(.ds-grid) td,.ds-table.ds-matrix th,
+/* WIDE columns for TEXT tables only — each prose cell wide enough that its
+   full content fits in a few lines (short rows ⇒ compact table); table goes
+   wide and the ONE table-level horizontal scrollbar handles the spread.
+   ds-stackmap is a MARKER/dot grid — it must stay COMPACT (a 420px dot-cell
+   turns a 23-company map into a ~10,000px empty expanse — "all data
+   missing"); ds-grid (sector dot-matrix) likewise stays at its base size. */
+.ds-table.ds-matrix:not(.ds-grid) td,.ds-table.ds-matrix:not(.ds-grid) th,
 .ds-table.ds-dsp td,.ds-table.ds-dsp th,
-.ds-table.ds-deepdive td,.ds-table.ds-deepdive th,
-.ds-table.ds-stackmap td,.ds-table.ds-stackmap th{
+.ds-table.ds-deepdive td,.ds-table.ds-deepdive th{
   min-width:420px!important;width:420px!important;vertical-align:top;
   white-space:normal!important}
+/* MARKER stack map: compact columns sized for the logo+name header and the
+   centred 11px ownership dot — a tight, scannable grid (horizontal scroll
+   for the many company columns, exactly as before). */
+.ds-table.ds-stackmap td,.ds-table.ds-stackmap th{
+  min-width:150px!important;width:150px!important;
+  text-align:center;vertical-align:middle;white-space:normal}
 .ds-table.ds-matrix .ds-rowlbl,.ds-table.ds-dsp .ds-rowlbl,
 .ds-table.ds-deepdive .ds-rowlbl,.ds-table.ds-stackmap .ds-rowlbl,
 .ds-table.ds-matrix .ds-corner,.ds-table.ds-deepdive .ds-corner,
