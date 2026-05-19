@@ -1527,6 +1527,22 @@ html{scroll-behavior:smooth}
 .ds-flow.ds-flow--quad .ds-flow-step{min-width:0!important;padding:18px 20px!important;gap:8px}
 
 
+.ds-help{display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;margin-left:6px;border-radius:50%;
+  font:700 9px/1 var(--font-mono,ui-monospace,monospace);
+  color:var(--acc);background:rgba(3,108,100,.10);
+  border:1px solid rgba(3,108,100,.32);cursor:help;vertical-align:middle;
+  user-select:none;flex:0 0 auto;transition:background .15s,color .15s}
+.ds-help:hover,.ds-help:focus-visible{background:var(--acc);color:#fff;outline:none}
+#ds-help-tip{position:fixed;z-index:9999;max-width:280px;
+  background:var(--ink);color:#fff;
+  font:500 var(--fs-mono,11.5px)/1.5 var(--font-sans,system-ui,sans-serif);
+  padding:9px 12px;border-radius:8px;box-shadow:0 6px 24px rgba(11,18,32,.22);
+  pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity .12s,transform .12s}
+#ds-help-tip.on{opacity:1;transform:translateY(0)}
+
+
 </style>
 <script>
 /* Zero-blank logo guarantee: when a company favicon 404s, swap the <img> for a
@@ -1553,6 +1569,90 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
   window.addEventListener('load',sync);
   setTimeout(sync,600);
   window.addEventListener('resize',deb);
+})();
+</script>
+<script>
+/* Segment help tooltips: attach a "?" to every table row-group label
+   (th.ds-rowlbl) and show a quick plain-language explanation on hover/focus,
+   hidden on mouse-out/blur. One body-root floating tip (never absolute inside
+   the table's overflow). Label->tip is a fixed map; unknown labels get no "?". */
+(function(){
+  var TIP={
+    "models":"Whether the company trains its own foundation model from scratch or fine-tunes someone else's.",
+    "models — owned vs foreign-base":"Whether the model is built from scratch in-house or is a fine-tune of a foreign base model.",
+    "silicon":"The AI chips and fabs — the one layer no Indian player owns; it is rented, ultimately from NVIDIA.",
+    "compute & cloud":"GPU clusters and hosting kept inside India's jurisdiction.",
+    "data":"Ownership of Indian-language and national datasets used to train and tune the model.",
+    "distribution":"The channel that puts the AI in front of citizens, businesses or government at scale.",
+    "applications":"The deployed products that actually deliver the AI to citizens or enterprises.",
+    "capabilities":"What the company can actually do across the AI stack today.",
+    "stack layers held":"Which layers of the stack (model, data, compute, distribution) the company actually controls.",
+    "funding · investors":"How much the company has raised and who backed it.",
+    "funding · state linkage":"Government / IndiaAI funding and how closely the company is tied to the State.",
+    "region · type · founded":"Where the company is based, what kind of entity it is, and when it was founded.",
+    "customers · sectors":"Which customers and regulated sectors the company serves.",
+    "citizen / government deployment":"Whether the company has a live deployment serving citizens or government.",
+    "government & public dpi":"Citizen data and public digital infrastructure: a foreign model is barred on security grounds (DPDP + IndiaAI).",
+    "government / public sector":"Government as the buyer — procurement governed by DPDP and the IndiaAI open-weight rule.",
+    "fintech & bfsi":"Banking and finance: RBI's binding 2018 payments-data localisation, plus its FREE-AI committee recommending an Indian model.",
+    "financial services / bfsi":"Banking and finance: RBI's binding 2018 payments-data localisation, plus the FREE-AI indigenous-model recommendation.",
+    "health & biotech":"Health data is the most sensitive class under the DPDP Act; ABDM is government-owned, so the model must run in India.",
+    "healthcare & life sciences":"Health data is the most sensitive class under the DPDP Act; ABDM is government-owned, so the model must run in India.",
+    "telecom":"Statutory Critical Information Infrastructure under IT Act S.70A (NCIIPC) — call data cannot run on a foreign cloud.",
+    "energy & utilities":"Grid data is Critical Information Infrastructure under IT Act S.70A (NCIIPC) — barred from a foreign cloud.",
+    "defence":"Classified and air-gapped; 75% of defence capital acquisition is ring-fenced for Indian industry.",
+    "defence / national security":"Classified and air-gapped; 75% of defence capital acquisition is ring-fenced for Indian industry.",
+    "transportation & logistics":"Critical Information Infrastructure under IT Act S.70A (NCIIPC names Transport); ports, aviation and ULIP bar a foreign-cloud model.",
+    "manufacturing / industry":"An enterprise vertical where regulated, on-prem AI demand concentrates.",
+    "enterprise (regulated)":"Regulated private-sector buyers (banks, insurers, hospitals) as distinct from government.",
+    "money pool (the government number)":"The official government budget or figure that sizes the opportunity in this sector.",
+    "where ai earns or saves":"The specific places AI creates revenue or cuts cost in this sector.",
+    "why it must be indian — the rule that blocks foreigners":"The specific law or rule that requires an India-resident model and shuts out a foreign API.",
+    "the biggest product still unbuilt":"The largest sovereign-AI product in this sector that no one has built yet.",
+    "already taken or still open":"Whether an Indian company already holds this sector, or it is still open.",
+    "bottom line":"The one-sentence takeaway for this row.",
+    "bottom-line read":"The one-sentence takeaway for this row."
+  };
+  function primaryLabel(th){
+    var c=th.cloneNode(true);
+    c.querySelectorAll('.ds-rl-sub,.ds-help').forEach(function(n){n.remove();});
+    return (c.textContent||'').replace(/\s+/g,' ').trim();
+  }
+  function build(){
+    var tip=document.getElementById('ds-help-tip');
+    if(!tip){tip=document.createElement('div');tip.id='ds-help-tip';tip.setAttribute('role','tooltip');document.body.appendChild(tip);}
+    document.querySelectorAll('th.ds-rowlbl').forEach(function(th){
+      if(th.querySelector('.ds-help')) return;
+      var key=primaryLabel(th).toLowerCase();
+      var txt=TIP[key]; if(!txt) return;
+      var s=document.createElement('span');
+      s.className='ds-help';s.textContent='?';s.tabIndex=0;
+      s.setAttribute('role','button');s.setAttribute('aria-label',txt);
+      s.setAttribute('data-tip',txt);
+      var sub=th.querySelector('.ds-rl-sub');
+      if(sub) th.insertBefore(s,sub); else th.appendChild(s);
+    });
+  }
+  function show(el){
+    var tip=document.getElementById('ds-help-tip'); if(!tip) return;
+    tip.textContent=el.getAttribute('data-tip');
+    var r=el.getBoundingClientRect();
+    tip.style.left='0px';tip.style.top='0px';tip.classList.add('on');
+    var tw=tip.offsetWidth, thh=tip.offsetHeight;
+    var x=r.left+r.width/2-tw/2;
+    x=Math.max(8,Math.min(x,window.innerWidth-tw-8));
+    var y=r.top-thh-8; if(y<8) y=r.bottom+8;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  }
+  function hide(){var t=document.getElementById('ds-help-tip');if(t)t.classList.remove('on');}
+  document.addEventListener('mouseover',function(e){var h=e.target.closest&&e.target.closest('.ds-help');if(h)show(h);});
+  document.addEventListener('mouseout',function(e){if(e.target.closest&&e.target.closest('.ds-help'))hide();});
+  document.addEventListener('focusin',function(e){if(e.target.classList&&e.target.classList.contains('ds-help'))show(e.target);});
+  document.addEventListener('focusout',function(e){if(e.target.classList&&e.target.classList.contains('ds-help'))hide();});
+  window.addEventListener('scroll',hide,true);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build);
+  else build();
+  window.addEventListener('load',build);
 })();
 </script>
 </head>
