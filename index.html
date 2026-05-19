@@ -411,8 +411,8 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
 .ds-scroll-hint{
   
   display:none;
-  font-family:var(--font-mono);font-size:7.5px;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;
+  font-family:var(--font-mono)!important;font-size:7.5px!important;font-weight:600!important;
+  letter-spacing:.05em!important;text-transform:uppercase;line-height:1!important;
   color:#fff;background:var(--ink);
   width:max-content;max-width:100%;
   padding:2px 8px;border-radius:999px;
@@ -1518,12 +1518,13 @@ html{scroll-behavior:smooth}
   background:transparent!important;border-radius:0!important;
   padding-left:0!important;padding-right:0!important;
 }
-.ds-flow--quad{
-  display:grid!important;grid-template-columns:1fr 1fr;
-  gap:var(--sp-4);overflow:visible;margin:var(--sp-5) 0;padding:0;
+.ds-flow.ds-flow--quad:not(.ds-flow--paired){
+  display:grid!important;grid-template-columns:1fr 1fr!important;
+  flex-wrap:wrap!important;overflow:visible!important;
+  gap:var(--sp-4)!important;margin:var(--sp-5) 0!important;padding:0!important;
 }
-.ds-flow--quad .ds-flow-arrow{display:none}
-.ds-flow--quad .ds-flow-step{min-width:0;padding:18px 20px;gap:8px}
+.ds-flow.ds-flow--quad .ds-flow-arrow{display:none!important}
+.ds-flow.ds-flow--quad .ds-flow-step{min-width:0!important;padding:18px 20px!important;gap:8px}
 
 
 </style>
