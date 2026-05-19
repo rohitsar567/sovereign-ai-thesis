@@ -1534,6 +1534,8 @@ html{scroll-behavior:smooth}
   border:1px solid rgba(3,108,100,.32);cursor:help;vertical-align:middle;
   user-select:none;flex:0 0 auto;transition:background .15s,color .15s}
 .ds-help:hover,.ds-help:focus-visible{background:var(--acc);color:#fff;outline:none}
+.ds-own[data-tip],.ds-dep[data-tip]{cursor:help}
+.ds-own[data-tip]:focus-visible,.ds-dep[data-tip]:focus-visible{outline:2px solid var(--acc);outline-offset:1px;border-radius:50%}
 #ds-help-tip{position:fixed;z-index:9999;max-width:280px;
   background:var(--ink);color:#fff;
   font:500 var(--fs-mono,11.5px)/1.5 var(--font-sans,system-ui,sans-serif);
@@ -1643,6 +1645,17 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
       var sub=th.querySelector('.ds-rl-sub');
       if(sub) th.insertBefore(s,sub); else th.appendChild(s);
     });
+    // Cell-specific dot tooltips: move every non-empty dot's title to data-tip
+    // so the styled body-root tip shows on hover (replaces the slow browser
+    // default). Covers §01/§03/§04 matrix dots in one pass; idempotent.
+    document.querySelectorAll('.ds-own[title], .ds-dep[title]').forEach(function(d){
+      var t=d.getAttribute('title'); if(!t) return;
+      d.setAttribute('data-tip', t);
+      d.removeAttribute('title');
+      d.setAttribute('tabindex','0');
+      d.setAttribute('role','img');
+      d.setAttribute('aria-label', t);
+    });
   }
   function show(el){
     var tip=document.getElementById('ds-help-tip'); if(!tip) return;
@@ -1656,10 +1669,10 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
     tip.style.left=x+'px';tip.style.top=y+'px';
   }
   function hide(){var t=document.getElementById('ds-help-tip');if(t)t.classList.remove('on');}
-  document.addEventListener('mouseover',function(e){var h=e.target.closest&&e.target.closest('.ds-help');if(h)show(h);});
-  document.addEventListener('mouseout',function(e){if(e.target.closest&&e.target.closest('.ds-help'))hide();});
-  document.addEventListener('focusin',function(e){if(e.target.classList&&e.target.classList.contains('ds-help'))show(e.target);});
-  document.addEventListener('focusout',function(e){if(e.target.classList&&e.target.classList.contains('ds-help'))hide();});
+  document.addEventListener('mouseover',function(e){var h=e.target.closest&&e.target.closest('[data-tip]');if(h)show(h);});
+  document.addEventListener('mouseout',function(e){if(e.target.closest&&e.target.closest('[data-tip]'))hide();});
+  document.addEventListener('focusin',function(e){var t=e.target;if(t&&t.hasAttribute&&t.hasAttribute('data-tip'))show(t);});
+  document.addEventListener('focusout',function(e){var t=e.target;if(t&&t.hasAttribute&&t.hasAttribute('data-tip'))hide();});
   window.addEventListener('scroll',hide,true);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build);
   else build();
