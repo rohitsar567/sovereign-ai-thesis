@@ -12,22 +12,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="assets/trajectory-chart.css" rel="stylesheet">
 <style id="design-system">
-/* =============================================================================
-   SOVEREIGN AI THESIS — DESIGN SYSTEM v2 (drop-in for <style id="design-system">)
-   Keys to the EXISTING .ds-* contract. Renames nothing. Removes nothing.
-   Adds: compact citation system + section-hierarchy ramp + chart treatment +
-   the Lane motif + the spine. Mobile-first, zero horizontal overflow @1512/768.
-============================================================================= */
 
-/* ── 1. TOKENS ─────────────────────────────────────────────────────────── */
+
+
 :root{
-  /* surfaces — warmer paper than v1; cards a hair off-white for editorial feel */
+  
   --bg-deep:#f4f5f0;
   --bg-card:#ffffff;
   --bg-surface:#ebebe4;
   --bg-rail:#eeeee7;
 
-  /* ink — deeper for editorial contrast */
+  
   --ink:#0b1220;
   --ink-2:#3a4150;
   --ink-3:#6a7282;
@@ -35,57 +30,57 @@
   --rule:rgba(11,18,32,.10);
   --rule-2:rgba(11,18,32,.16);
 
-  /* accents — one signature teal, restrained taxonomy palette */
-  --acc:#036c64;            /* signature: deep editorial teal */
-  --acc-hi:#0a8a80;         /* hover/lit */
+  
+  --acc:#036c64;            
+  --acc-hi:#0a8a80;         
   --acc-dim:rgba(3,108,100,.10);
   --acc-wash:rgba(3,108,100,.05);
 
-  --tax-demand:#b46314;     /* amber-ochre — demand */
-  --tax-supply:#5b3aa3;     /* violet — supply */
-  --tax-policy:#036c64;     /* teal — policy */
-  --tax-rose:#a8243a;       /* rose — shock */
+  --tax-demand:#b46314;     
+  --tax-supply:#5b3aa3;     
+  --tax-policy:#036c64;     
+  --tax-rose:#a8243a;       
   --tax-rose-dim:rgba(168,36,58,.08);
 
-  /* citation rail */
+  
   --cite-bg:rgba(3,108,100,.08);
   --cite-ink:#036c64;
 
-  /* type */
+  
   --font-display:'Sora',sans-serif;
   --font-body:'Source Serif 4',serif;
   --font-mono:'JetBrains Mono',ui-monospace,monospace;
 
-  /* type scale — EDITORIAL: bigger body, bigger titles */
-  --fs-mono-xs:.62rem;       /* 9.9px */
-  --fs-mono:.72rem;          /* 11.5px — kickers */
-  --fs-cite:.66rem;          /* superscript number */
-  --fs-meta:.78rem;          /* 12.5px — captions, qual */
+  
+  --fs-mono-xs:.62rem;       
+  --fs-mono:.72rem;          
+  --fs-cite:.66rem;          
+  --fs-meta:.78rem;          
   --fs-xs:.86rem;
   --fs-sm:.94rem;
-  --fs-body:1.06rem;         /* 16.9px — prose; was 14.7 */
-  --fs-lede:1.22rem;         /* 19.5px — sub */
+  --fs-body:1.06rem;         
+  --fs-lede:1.22rem;         
   --fs-h3:1.18rem;
   --fs-h2:1.5rem;
-  --fs-title:clamp(1.8rem,3vw,2.2rem);   /* locked: Tighter template */
-  --fs-hero:clamp(2.2rem,4.2vw,3.4rem);  /* locked: Tighter template — hero ≤3.4rem */
+  --fs-title:clamp(1.8rem,3vw,2.2rem);   
+  --fs-hero:clamp(2.2rem,4.2vw,3.4rem);  
   --fs-climax:clamp(3rem,6.6vw,6rem);
 
-  /* spacing */
+  
   --sp-1:6px; --sp-2:10px; --sp-3:14px; --sp-4:20px; --sp-5:28px;
   --sp-6:38px; --sp-7:52px; --sp-8:72px; --sp-9:96px; --sp-10:128px;
 
-  /* radii — slightly sharper, editorial */
+  
   --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
 
-  /* shadows — softer, more architectural */
+  
   --sh-card:0 1px 0 var(--rule), 0 10px 30px -20px rgba(11,18,32,.18);
   --sh-pop:0 24px 60px -24px rgba(11,18,32,.32);
 
-  /* container */
+  
   --container:1180px;
   --measure:680px;
-  --rail:300px;   /* right-side marginalia rail (citations) */
+  --rail:300px;   
   --gutter:32px;
 }
 
@@ -100,7 +95,7 @@ body{
 ::selection{background:var(--acc);color:#fff}
 img{max-width:100%;display:block}
 
-/* ── 2. PAPER (paper-noise + paper-rule SVG layers, very subtle) ───────── */
+
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.06 0 0 0 0 0.10 0 0 0 0.035 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
@@ -108,7 +103,7 @@ body::before{
 }
 body>*{position:relative;z-index:1}
 
-/* ── 3. TOP NAV (.snav) ───────────────────────────────────────────────── */
+
 .snav{
   position:sticky;top:0;z-index:80;
   background:color-mix(in srgb, var(--bg-deep) 88%, transparent);
@@ -131,7 +126,7 @@ body>*{position:relative;z-index:1}
 .snav .spacer{flex:1}
 .snav .meta{font-size:var(--fs-mono-xs);color:var(--ink-3);letter-spacing:.14em}
 
-/* ── 4. SECTION CHROME — every section uses .ds-section + (optional) modifiers ─ */
+
 body>section{
   padding:var(--sp-9) 0;border-top:1px solid var(--rule);position:relative;
 }
@@ -143,13 +138,13 @@ body>section.hero-wrap{border-top:none;padding:0}
 }
 .ds-section>*:last-child{margin-bottom:0}
 
-/* desktop reserves a right rail for citation marginalia */
+
 @media (min-width:1280px){
   .ds-section{padding-right:calc(var(--gutter) + var(--rail) + 36px)}
-  .ds-section--full{padding-right:var(--gutter)} /* opt-out: tables/charts use full width */
+  .ds-section--full{padding-right:var(--gutter)} 
 }
 
-/* ── 5. SECTION HEADERS ──────────────────────────────────────────────── */
+
 .ds-kicker{
   font-family:var(--font-mono);font-size:var(--fs-mono);font-weight:600;
   letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);
@@ -171,8 +166,8 @@ body>section.hero-wrap{border-top:none;padding:0}
 }
 .ds-sub strong{color:var(--ink);font-weight:600}
 
-/* sub-section heading */
-.ds-block-head{margin:var(--sp-8) 0 var(--sp-3);max-width:var(--measure)}
+
+.ds-block-head{margin:var(--sp-6) 0 var(--sp-3);max-width:var(--measure)}
 .ds-block-head h2{
   font-family:var(--font-display);font-size:var(--fs-h2);font-weight:700;
   letter-spacing:-.02em;color:var(--ink);margin:0 0 8px;line-height:1.2;
@@ -182,7 +177,7 @@ body>section.hero-wrap{border-top:none;padding:0}
   color:var(--ink-2);margin:0;
 }
 
-/* ── 6. THE SPINE — recurring thread, hero→S7 ─────────────────────────── */
+
 .ds-spine-rule{
   height:2px;width:100%;border:0;border-radius:var(--r-pill);
   background:linear-gradient(90deg,var(--acc) 0%,var(--tax-supply) 55%,var(--tax-demand) 100%);
@@ -190,7 +185,7 @@ body>section.hero-wrap{border-top:none;padding:0}
 }
 .ds-spine-rule.ds-spine-tick{width:56px;margin-bottom:18px}
 
-/* ── 7. THE LANE — six-layer stack motif (silicon leased / one lane lit) ─ */
+
 .ds-motif-stack{
   display:inline-flex;flex-direction:column;gap:.18em;
   font-size:1rem;width:2.4em;vertical-align:middle;flex:0 0 auto;line-height:0;
@@ -218,7 +213,7 @@ body>section.hero-wrap{border-top:none;padding:0}
   .ds-motif-stack .ds-motif-layer.is-lane{animation:none}
 }
 
-/* hero variant: large + labeled */
+
 .ds-motif-stack--hero{font-size:2.4rem;width:2.4em}
 .ds-motif-stack--hero + .ds-motif-legend{
   font-family:var(--font-mono);font-size:var(--fs-mono-xs);
@@ -228,10 +223,10 @@ body>section.hero-wrap{border-top:none;padding:0}
 .ds-motif-stack--hero + .ds-motif-legend b{color:var(--acc);font-weight:600}
 .ds-motif-stack--hero + .ds-motif-legend i{color:var(--tax-rose);font-style:normal;font-weight:600}
 
-/* climax variant: enormous */
+
 .ds-section--climax .ds-motif-stack{font-size:3.2rem}
 
-/* ── 8. PROSE BLOCKS ─────────────────────────────────────────────────── */
+
 .ds-prose{max-width:var(--measure);margin:0 0 var(--sp-5)}
 .ds-cols{
   display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5) 44px;
@@ -260,7 +255,7 @@ body>section.hero-wrap{border-top:none;padding:0}
   border-radius:50%;left:0;top:.55em;
 }
 
-/* qual + shock chips */
+
 .ds-qual{
   font-family:var(--font-mono);font-size:.6rem;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;color:var(--tax-demand);
@@ -275,25 +270,18 @@ body>section.hero-wrap{border-top:none;padding:0}
   margin-left:5px;vertical-align:1px;
 }
 
-/* ── 9. COMPACT CITATION SYSTEM ─────────────────────────────────────────
-   PATTERN: <a class="ds-src" href="…">…verbose label…</a>
-   JS transforms each section's .ds-src anchors:
-   (a) dedupes by href → numbered, per-section
-   (b) sets data-cite-num + data-cite-label, wraps text in <span class="ds-src-label">
-   (c) appends <ol class="ds-cites"> at section's end
-   (d) on desktop, renders the same list in the right marginalia rail .ds-rail
-   CSS hides the verbose inline text and shows only the number superscript. */
+
 
 a.ds-src{
   position:relative;display:inline;color:var(--cite-ink);text-decoration:none;
   font-family:var(--font-mono);font-weight:600;
-  /* before JS runs: keep the existing visible behavior (underline + label) */
+  
   border-bottom:1px solid rgba(3,108,100,.30);
 }
 a.ds-src .ds-src-label{
-  /* hidden by JS once cite-num is assigned */
+  
 }
-/* AFTER transform: the inline anchor renders as a small mono numeric chip */
+
 a.ds-src[data-cite-num]{
   border-bottom:0;background:var(--cite-bg);color:var(--cite-ink);
   font-size:var(--fs-cite);line-height:1;font-weight:700;
@@ -311,10 +299,10 @@ a.ds-src[data-cite-num] .ds-src-label{
   position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);
   white-space:nowrap;border:0;padding:0;margin:-1px;
 }
-a.ds-src[data-cite-num]::before{content:counter(c)} /* fallback display content; overridden by attr */
+a.ds-src[data-cite-num]::before{content:counter(c)} 
 a.ds-src[data-cite-num]::before{content:attr(data-cite-num)}
 
-/* Hover tooltip — shows the verbose label without bloating the prose. */
+
 a.ds-src[data-cite-num][data-cite-label]:hover::after{
   content:attr(data-cite-label);
   position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);
@@ -326,7 +314,7 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
   pointer-events:none;z-index:99;
 }
 
-/* The per-section footnote list, appended at section end */
+
 .ds-cites{
   margin-top:var(--sp-8);padding-top:var(--sp-5);
   border-top:1px solid var(--rule);
@@ -356,8 +344,7 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
   letter-spacing:.06em;display:block;margin-top:2px;
 }
 
-/* MARGINALIA RAIL — visible only ≥ 1280px (CSS positioning).
-   JS clones the .ds-cites list into .ds-rail at section render time. */
+
 .ds-rail{display:none}
 @media (min-width:1280px){
   .ds-section{position:relative}
@@ -386,12 +373,11 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
   .ds-rail li a{color:var(--ink-2);text-decoration:none}
   .ds-rail li a:hover{color:var(--acc)}
   .ds-rail li .dom{color:var(--ink-4);font-size:.6rem;letter-spacing:.06em;display:block;margin-top:1px}
-  /* when the rail is rendered, the section's footnote list collapses to a small
-     "see also: sources" callout — desktops use the rail, mobiles use the list */
+  
   .ds-section .ds-cites{display:none}
 }
 
-/* ── 10. CHART HOST ──────────────────────────────────────────────────── */
+
 .ds-chart-block{margin:var(--sp-5) 0 var(--sp-3)}
 .ds-chart{
   display:block;width:100%;background:var(--bg-card);
@@ -416,24 +402,22 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
   padding:14px 18px;margin-top:14px;max-width:var(--measure);
 }
 
-/* ── 11. TABLES ──────────────────────────────────────────────────────── */
+
 .ds-table-wrap{
   overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;
   border-radius:var(--r-md);border:1px solid var(--rule);
   background:var(--bg-card);margin-top:var(--sp-4);box-shadow:var(--sh-card);
 }
 .ds-scroll-hint{
-  /* hidden by default; shown ONLY when JS detects the next table actually
-     overflows (the user must be told there is more content to the right).
-     Prominent dark pill per the reference, on every viewport. */
+  
   display:none;
-  font-family:var(--font-mono);font-size:var(--fs-mono-xs);font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
+  font-family:var(--font-mono);font-size:7.5px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;
   color:#fff;background:var(--ink);
   width:max-content;max-width:100%;
-  padding:4px 12px;border-radius:999px;
-  box-shadow:0 1px 6px rgba(11,18,32,.16);
-  margin:var(--sp-3) 0 5px;
+  padding:2px 8px;border-radius:999px;
+  box-shadow:0 1px 4px rgba(11,18,32,.14);
+  margin:var(--sp-2) 0 4px;
 }
 .ds-scroll-hint.is-scrollable{display:inline-flex;align-items:center;}
 .ds-table{
@@ -481,7 +465,7 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
 .ds-table tr:last-child td,.ds-table tr:last-child th{border-bottom:none}
 .ds-table th:last-child,.ds-table td:last-child{border-right:none}
 
-/* ── 12. CARDS ──────────────────────────────────────────────────────── */
+
 .ds-grid-cards{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   gap:var(--sp-4);margin-top:var(--sp-5);
@@ -534,7 +518,7 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
 }
 .ds-take strong{font-weight:700;color:var(--acc)}
 
-/* ── 13. TAKE-BLOCK (the conclusion) ─────────────────────────────────── */
+
 .ds-take-block{
   font-family:var(--font-body);font-size:var(--fs-lede);line-height:1.6;
   color:var(--ink);max-width:var(--measure);
@@ -554,11 +538,11 @@ a.ds-src[data-cite-num][data-cite-label]:hover::after{
 .ds-take-block p:last-child{margin-bottom:0}
 .ds-take-block strong{font-weight:700}
 
-/* ── 14. ATTENTION ESCALATION — section ramp ────────────────────────── */
+
 .ds-section--lead .ds-kicker::before{width:36px;height:2px}
 .ds-section--lead .ds-title{font-size:clamp(2.4rem,4.8vw,4rem)}
 
-/* climax — S7 destination */
+
 body>section.ds-section--climax-wrap,
 .ds-section--climax{
   position:relative;
@@ -585,7 +569,7 @@ body>section.ds-section--climax-wrap::before{
 .ds-section--climax .ds-take-block::before{background:var(--bg-card)}
 .ds-section--climax .ds-take-block strong{color:var(--acc)}
 
-/* ── 15. HERO ───────────────────────────────────────────────────────── */
+
 .hero-wrap{padding:0}
 .hero{
   position:relative;overflow:hidden;
@@ -614,9 +598,7 @@ body>section.ds-section--climax-wrap::before{
   margin-bottom:32px;text-wrap:balance;max-width:18ch;
 }
 .hero h1 em{
-  /* clean teal accent — matches the site's accent language everywhere else;
-     the old linear-gradient highlighter slab rendered as a clumsy pale box
-     under "national question" (user: "changes missed"). */
+  
   font-style:normal;color:var(--acc);font-weight:800;
 }
 
@@ -671,7 +653,7 @@ body>section.ds-section--climax-wrap::before{
   border-radius:0 var(--r-md) var(--r-md) 0;
 }
 
-/* hero right — the Lane motif as a poster, framed */
+
 .hero-right{
   position:relative;align-self:start;
   padding:32px;
@@ -724,7 +706,7 @@ body>section.ds-section--climax-wrap::before{
 .hero-poster-foot .own{color:var(--acc)}
 .hero-poster-foot .rent{color:var(--tax-rose)}
 
-/* ── 16. DETAILS / COLLAPSE ─────────────────────────────────────────── */
+
 .ds-details{
   background:var(--bg-card);border:1px solid var(--rule);
   border-radius:var(--r-md);box-shadow:var(--sh-card);
@@ -747,7 +729,7 @@ body>section.ds-section--climax-wrap::before{
   margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--rule);
 }
 
-/* ── 17. RESPONSIVE ─────────────────────────────────────────────────── */
+
 @media (max-width:880px){
   :root{--sp-9:64px;--sp-10:80px}
   .ds-cols{grid-template-columns:1fr}
@@ -761,17 +743,14 @@ body>section.ds-section--climax-wrap::before{
   .hero h1{font-size:clamp(2.4rem,9vw,3.4rem)}
 }
 
-/* legacy class aliases (keep names) */
+
 .section-label{font-family:var(--font-mono);font-size:var(--fs-mono);font-weight:600;
   letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
 .section-title{font-family:var(--font-display);font-size:var(--fs-title);font-weight:700;
   letter-spacing:-.035em;line-height:1.05;margin-bottom:22px}
 .section-desc{font-size:var(--fs-lede);color:var(--ink-2);line-height:1.6;margin-bottom:24px;max-width:var(--measure)}
 
-/* ── TOKEN-ALIAS BRIDGE ─────────────────────────────────────────────────────
-   The ported matrix/table component family below uses v1 token names. Map
-   them onto the v2 tokens so every ported rule resolves against v2. Only v1
-   names that v2 does NOT define are aliased; v2-owned names resolve to v2. */
+
 :root{
  --accent-teal:var(--acc);--accent-teal-dim:var(--acc-dim);
  --accent-rose:var(--tax-rose);--accent-rose-dim:var(--tax-rose-dim);
@@ -780,23 +759,16 @@ body>section.ds-section--climax-wrap::before{
  --border-subtle:var(--rule);--border-medium:var(--rule-2);
  --fs-kicker:var(--fs-mono);--fs-mono-sm:var(--fs-mono-xs);
 }
-/* ── PORTED MATRIX/TABLE COMPONENT FAMILY ───────────────────────────────────
-   Copied VERBATIM from the OLD canonical block. These selectors style .ds-x
-   classes the v2 base omits (sector-by-company maps, company-by-stack table,
-   dot grids, 4-bucket tear-downs, logos, stack-foot legends, trajectory
-   modal). They reference v1 token names which the bridge above now resolves
-   to v2. v1 generic table/section/card/list/kicker/title/sub/qual/spine and
-   motif/hero rules are NOT ported (the v2 base owns those names). */
-/* .ds-sub-th — sub-heading line inside a thead th */
+
+
 .ds-table thead th .ds-sub-th{display:block;font-family:var(--font-body);
  font-size:var(--fs-meta);font-weight:400;color:var(--text-secondary);
  margin-top:4px;text-transform:none;letter-spacing:0;line-height:1.45}
-/* .ds-dsp / .ds-matrix — lead-line ink + faint zebra (depends on v1 ink ramp) */
+
 .ds-table.ds-dsp td li:first-child,.ds-table.ds-matrix td li:first-child{color:var(--text-primary)}
 .ds-table.ds-dsp tbody tr:nth-of-type(even)>td,.ds-table.ds-dsp tbody tr:nth-of-type(even)>th,
 .ds-table.ds-matrix tbody tr:nth-of-type(even)>td,.ds-table.ds-matrix tbody tr:nth-of-type(even)>th{background:rgba(13,148,136,.035)}
-/* matrix-flavour cells: TIGHT — chart + matrix must co-fit ~one viewport.
-   Smaller type, denser padding, modest min-width so all 6 time buckets read. */
+
 .ds-table.ds-matrix{font-size:var(--fs-xs)}
 .ds-table.ds-matrix th,.ds-table.ds-matrix td{padding:6px 10px;line-height:1.28}
 .ds-table.ds-matrix thead th{padding:6px 10px}
@@ -807,19 +779,10 @@ body>section.ds-section--climax-wrap::before{
 .ds-table.ds-matrix td li:last-child{margin-bottom:0}
 .ds-table.ds-matrix td li::before{font-size:.62rem;top:1px}
 .ds-table.ds-matrix .ds-qual,.ds-table.ds-matrix .ds-shock-tag{font-size:.54rem}
-/* The Demand/Supply/Policy matrix has irreducible per-cell factual bullets
-   (Rule #0 — none may be cut). To make the trajectory chart + the FULL matrix
-   co-visible in one screen, the matrix sits in a fixed ~half-viewport panel
-   that scrolls internally: every bullet is present, the sticky header + row
-   labels stay pinned, nothing is deleted. */
+
 .ds-table-wrap:has(table.ds-matrix){max-height:44vh;overflow:auto}
 .ds-table.ds-matrix tbody th.ds-rowlbl{min-width:78px;width:78px}
-/* dsp-flavour: the single Demand/Supply/Policy × phase matrix that replaces
-   the old 4-section narrative + time-bucket matrix. 3 colour-accented row
-   labels (demand/supply/policy, same accents as .ds-matrix), 4 phase columns.
-   Same dense type as .ds-matrix; sits in a fixed ~half-viewport panel that
-   scrolls internally so the chart + this table stay co-visible. Tokens reused
-   from the adjacent .ds-matrix block — no new scale introduced. */
+
 .ds-table.ds-dsp{font-size:var(--fs-xs)}
 .ds-table.ds-dsp th,.ds-table.ds-dsp td{padding:8px 12px;line-height:1.32}
 .ds-table.ds-dsp thead th{padding:8px 12px;text-align:left}
@@ -833,10 +796,7 @@ body>section.ds-section--climax-wrap::before{
 .ds-table.ds-dsp tbody th.ds-rowlbl{min-width:84px;width:84px;
  vertical-align:top}
 .ds-table-wrap:has(table.ds-dsp){max-height:52vh;overflow:auto}
-/* grid-flavour: compact centered presence dots.
-   Companies are the column headers (sticky-top),
-   the FIRST column is the sticky row-label so it stays visible while
-   the company columns scroll horizontally. */
+
 .ds-table.ds-grid th,.ds-table.ds-grid td{padding:9px 10px;text-align:center;
  font-family:var(--font-mono);font-size:var(--fs-mono)}
 .ds-table.ds-grid thead th{vertical-align:bottom;line-height:1.35;min-width:104px}
@@ -849,16 +809,11 @@ body>section.ds-section--climax-wrap::before{
 .ds-dot{display:inline-block;width:10px;height:10px;border-radius:50%;
  background:var(--accent-teal)}
 .ds-table.ds-grid td.empty{color:var(--text-dim)}
-/* company-column header (logo on its own line, label below) */
+
 .ds-colhdr{display:flex;flex-direction:column;align-items:center;gap:4px;
  text-align:center;line-height:1.2;white-space:normal;min-width:80px}
 .ds-colhdr .ds-logo{margin-right:0}
-/* deep-dive table: 16 company columns, 5 field rows.
-   Every body cell is a FIXED-height box (one uniform height for all rows so
-   the grid is perfectly aligned with zero whitespace); a cell whose content
-   exceeds the box scrolls INSIDE its own .ds-cellbox (overflow:auto) so
-   nothing is cut and no row stretches. Type/border/scale tokens reused from
-   the .ds-table / .ds-v body-value scale — no new scale introduced. */
+
 .ds-table.ds-deepdive{font-size:var(--fs-sm)}
 .ds-table.ds-deepdive td{min-width:236px;width:236px;padding:0;
  vertical-align:top}
@@ -868,25 +823,20 @@ body>section.ds-section--climax-wrap::before{
  color:var(--text-secondary)}
 .ds-table.ds-deepdive tr.ds-bl-row .ds-cellbox{color:var(--text-primary)}
 .ds-table.ds-deepdive .ds-cellbox .ds-chips{margin-top:0}
-/* deep-dive cells are tight bulleted lists (user #56): one point per <li>,
-   inherit the cell's --fs-sm scale, no trailing margin so the fixed-height
-   box + internal scroll behaviour is preserved exactly. */
+
 .ds-table.ds-deepdive .ds-cellbox .ds-list{margin:0}
 .ds-table.ds-deepdive .ds-cellbox .ds-list li{font-size:var(--fs-sm);
  color:inherit;margin:0 0 7px;line-height:1.55}
 .ds-table.ds-deepdive .ds-cellbox .ds-list li:last-child{margin-bottom:0}
 .ds-table.ds-deepdive .ds-cellbox .ds-list li strong{color:var(--text-primary)}
-/* Customers·Sectors grouping (user #57): a labelled separator <li> between
-   the named-anchor-customers group and the sector-class group. */
+
 .ds-table.ds-deepdive .ds-cellbox .ds-list li.ds-grp{list-style:none;
  padding-left:0;margin:8px 0 5px;font-family:var(--font-mono);
  font-size:var(--fs-mono);letter-spacing:.05em;text-transform:uppercase;
  color:var(--text-secondary);font-weight:700}
 .ds-table.ds-deepdive .ds-cellbox .ds-list li.ds-grp::before{content:none}
 .ds-table.ds-deepdive .ds-cellbox .ds-list li.ds-grp:first-child{margin-top:0}
-/* Customers·Sectors: PLAIN ▸ bullets, identical to every other deep-dive cell —
-   the .ds-chip pill is stripped here so this row no longer breaks visually from
-   the rest of the table; the sub-labels are the only grouping cue (user). */
+
 .ds-table.ds-deepdive .ds-cellbox .ds-list li.ds-grp{display:block;width:100%}
 .ds-table.ds-deepdive .ds-cellbox .ds-chip{display:inline;background:none;border:0;padding:0;border-radius:0;color:inherit;font-family:inherit;font-size:inherit;line-height:inherit}
 .ds-table.ds-deepdive thead th{position:sticky;top:0;z-index:2}
@@ -898,12 +848,7 @@ body>section.ds-section--climax-wrap::before{
  text-transform:uppercase;color:var(--text-primary);
  min-width:148px;width:148px;white-space:normal;line-height:1.35;
  vertical-align:top;padding:12px 14px}
-/* stack map: 6 layer rows × 16 company columns.
-   Rendered as a UNIFORM dot-matrix — identical row metrics to the approved
-   .ds-grid sector×company map (centered cells, vertical-align:middle, one
-   fixed row height) so there is ZERO per-row whitespace even though the
-   layer labels are descriptive. Ownership nuance shown via the marker —
-   filled = plays/owns the layer, hollow/outlined = dependent/partner. */
+
 .ds-table.ds-stackmap th,.ds-table.ds-stackmap td{padding:9px 10px;
  text-align:center;vertical-align:middle;line-height:1.35;
  font-family:var(--font-mono);font-size:var(--fs-mono)}
@@ -917,9 +862,7 @@ body>section.ds-section--climax-wrap::before{
  font-size:var(--fs-mono);font-weight:700;letter-spacing:.02em;
  text-transform:none;color:var(--text-primary);min-width:212px;
  width:212px;white-space:nowrap;line-height:1.35;vertical-align:middle}
-/* layer gloss → its own muted mono sub-line (same token as .ds-layer-name span)
-   so the primary layer name stays ONE line and every dot-row is uniform height
-   — no text lost, taxonomy intact, matrix reads like the approved sector map. */
+
 .ds-table.ds-stackmap tbody th.ds-rowlbl .ds-rl-sub{display:block;
  font-family:var(--font-mono);font-size:.6rem;font-weight:500;
  color:var(--text-dim);letter-spacing:.04em;text-transform:none;
@@ -930,11 +873,7 @@ body>section.ds-section--climax-wrap::before{
 .ds-dep{display:inline-block;width:11px;height:11px;border-radius:50%;
  background:transparent;border:2px solid var(--accent-teal);
  box-sizing:border-box;vertical-align:middle}
-/* legend + annotations: standalone blocks BELOW the scroll-wrap (not in a
-   table cell) so they always wrap to the visible container width — never
-   stretch to the scrolled table width (no right-edge overflow, user #28).
-   Card chrome copied from the nearest component (.ds-note / .ds-table-wrap):
-   same subtle border, --r-md radius, card bg, body type scale. */
+
 .ds-stack-legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center;
  font-family:var(--font-mono);font-size:var(--fs-mono);
  color:var(--text-secondary);padding:10px 16px;margin-top:var(--sp-2);
@@ -952,21 +891,20 @@ body>section.ds-section--climax-wrap::before{
 .ds-stack-foot li:last-child{margin-bottom:0}
 .ds-stack-foot li::before{content:"▸";position:absolute;left:0;top:0;
  color:var(--text-dim);font-size:.7rem}
-/* 4.5b zero-blank logo guarantee — branded monogram fallback when a favicon 404s.
-   Same box / radius / baseline as .ds-logo so layout never shifts. */
+
 .ds-logo-mono{display:inline-flex;align-items:center;justify-content:center;
  width:17px;height:17px;vertical-align:middle;border-radius:var(--r-sm);
  margin-right:6px;flex:0 0 auto;background:var(--accent-teal);
  color:#fff;font-family:var(--font-mono);font-size:.6rem;font-weight:700;
  line-height:1;text-transform:uppercase}
 .ds-colhdr .ds-logo-mono{margin-right:0}
-/* .ds-chips / .ds-chip — chip row + chip pill (deep-dive cells, customers) */
+
 .ds-chips{display:flex;flex-wrap:wrap;gap:6px}
 .ds-chip{display:inline-block;max-width:100%;white-space:normal;vertical-align:top;
  font-family:var(--font-mono);font-size:var(--fs-mono);line-height:1.35;
  color:var(--text-secondary);background:var(--bg-surface);
  border:1px solid var(--border-subtle);padding:3px 9px;border-radius:var(--r-sm)}
-/* 4.7 Stack-map layered rows */
+
 .ds-stack{display:flex;flex-direction:column;gap:10px;margin-top:var(--sp-5)}
 .ds-layer{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center;
  background:var(--bg-card);border:1px solid var(--border-subtle);
@@ -985,7 +923,7 @@ body>section.ds-section--climax-wrap::before{
 .ds-layer.l-models,.ds-layer.l-data{border-left:3px solid var(--accent-violet)}
 .ds-layer.l-apps,.ds-layer.l-dist{border-left:3px solid var(--accent-teal)}
 .ds-layer.l-gov{border-left:3px solid var(--accent-blue)}
-/* 4.9 Modal — trajectory inflection markers (chart JS builds .tjx-modal*) */
+
 .ds-modal-back,.tjx-modal-back{position:fixed;inset:0;
  background:rgba(0,0,0,.4);backdrop-filter:blur(6px);display:none;
  align-items:center;justify-content:center;z-index:9999;padding:24px}
@@ -1008,17 +946,10 @@ body>section.ds-section--climax-wrap::before{
  line-height:1.7;color:var(--text-secondary)}
 .tjx-modal-src{margin-top:14px;font-family:var(--font-mono);font-size:var(--fs-mono)}
 .tjx-modal-src a{color:var(--accent-blue)}
-/* 4.11 Company favicon (inline, baseline-safe in cells / chips) */
+
 .ds-logo{width:17px;height:17px;vertical-align:middle;border-radius:var(--r-sm);
  margin-right:6px;object-fit:contain;flex:0 0 auto}
-/* ── INTEGRATION OVERRIDE: no marginalia rail, no reserved rail space ─────
-   This thesis is table/matrix/chart-heavy. v2's citation rail reserved
-   ~rail+ px of right padding on EVERY .ds-section (squeezing the main
-   content site-wide) and floated a sources list into the gutter. Killed:
-   full width returns to every section, matrix and chart. Sources now render
-   (via citations.js) as ONE collapsed click-to-expand
-   <details class="ds-details ds-cites-details"> at each section's bottom —
-   the site's canonical collapsible — out of the way until expanded. */
+
 aside.ds-rail{display:none}
 @media (min-width:1280px){
   aside.ds-rail{display:none}
@@ -1031,22 +962,14 @@ aside.ds-rail{display:none}
 .ds-cites-details .ds-cites{margin-top:14px;padding-top:0;border-top:0;max-width:none}
 .ds-cites-details .ds-cites-head{display:none}
 
-/* ── INTEGRATION OVERRIDE 2: prose fills the container (user PRIME pref, 50+×:
-   never cap a body block narrower than its parent). v2's --measure (680px)
-   + the hero ch-caps squeezed every paragraph/sub/list/take-block site-wide. */
+
 :root{--measure:100%}
 .ds-sub,.ds-list,.ds-prose,.ds-block-head,.ds-note,.ds-take-block,
 .ds-details,.ds-cites,.ds-cites-details,.section-desc,
 .hero-sub,.hero-points,.ds-title,.hero h1,.ds-eyebrow,.ds-chart,
 .ds-grid-cards,.ds-cols,.hero-fxnote,.hero-arc{max-width:none}
 
-/* ── INTEGRATION OVERRIDE 3: unify ALL table variants to ONE v2 editorial
-   system. The ported v1 matrix CSS (dsp/matrix/grid/stackmap/deepdive) each
-   carried its own old look, so tables read as different systems. Force the
-   shared visual language (mono uppercase headers, rule borders, bg-rail row
-   /col labels, acc-wash zebra, body type) onto every variant; the variants'
-   own structural rules (dot cells, fixed-height scroll, sticky col/row,
-   column-logo headers) still apply and are untouched. */
+
 .ds-table.ds-dsp,.ds-table.ds-matrix,.ds-table.ds-grid,
 .ds-table.ds-stackmap,.ds-table.ds-deepdive{
   font-family:var(--font-body);background:var(--bg-card);
@@ -1086,10 +1009,7 @@ aside.ds-rail{display:none}
 .ds-table.ds-deepdive td li strong{color:var(--ink);font-weight:600}
 .ds-dot{box-shadow:none}
 
-/* ── INTEGRATION OVERRIDE 4: NO vertical scroll inside ANY table. Tables
-   render at full natural height; only horizontal scroll where a table is
-   wider than its container. Removes every old fixed-height / max-height
-   internally-scrolling panel and the deep-dive fixed-height cellbox. */
+
 .ds-table-wrap,
 .ds-table-wrap:has(table.ds-dsp),
 .ds-table-wrap:has(table.ds-matrix),
@@ -1098,22 +1018,13 @@ aside.ds-rail{display:none}
 .ds-table-wrap:has(table.ds-grid){max-height:none;overflow-y:visible}
 .ds-table.ds-deepdive .ds-cellbox{height:auto;max-height:none;overflow:visible}
 .ds-table.ds-deepdive td,.ds-table.ds-deepdive th{height:auto}
-/* widen deep-dive company columns so cells aren't cramped (no vertical
-   scroll → natural height; horizontal scroll handles the many columns) */
+
 .ds-table.ds-deepdive td{min-width:300px;width:300px}
-/* s4-stack uses 13-column per-company comparison matrices (ds-dsp + ds-stackmap
-   shapes) — same artifact as ds-deepdive, so give them the SAME readable
-   column width + natural height + horizontal scroll. SCOPED to #s4-stack so
-   the healthy few-column ds-dsp D/S/P grids in s1/s2 are untouched. Fixes the
-   185px-wide / up-to-559px-tall ribbon cells. */
+
 #s4-stack .ds-table.ds-dsp td,#s4-stack .ds-table.ds-stackmap td{
   min-width:300px;width:300px}
 
-/* ── INTEGRATION OVERRIDE 5: ONE bullet standard everywhere — every list
-   item (prose, table cell, deep-dive cell, hero) gets the same visible
-   marker, indent and inter-item spacing. No faint lines, no missing
-   markers, no cramped/blob lists. (hero-points keeps its numbered chips —
-   excluded from the marker rule.) */
+
 .ds-list li,.ds-table td li,.ds-section ul li,.ds-cellbox li{
   position:relative;padding-left:22px;margin:0 0 12px;line-height:1.62;
   font-family:var(--font-body);color:var(--ink-2);list-style:none}
@@ -1130,40 +1041,24 @@ aside.ds-rail{display:none}
 .ds-section ul li strong{color:var(--ink);font-weight:700}
 .ds-list li.ds-grp::before,.ds-table td li.ds-grp::before{content:none}
 
-/* ── INTEGRATION OVERRIDE 6: hero poster removed → hero is ONE full-width
-   column; kill the 2-col grid so .hero-left fills the whole container. */
+
 .hero{grid-template-columns:1fr;display:block}
 .hero-left{display:block;max-width:none}
 
-/* ── INTEGRATION OVERRIDE 7: every take-block carries a plain, human label so
-   it never "starts abruptly with no intro" (user #13/#17). Not the rejected
-   editorial "THE READ" — a quiet "THE BOTTOM LINE" eyebrow that tells the
-   reader exactly what this block is. */
+
 .ds-take-block::before,.ds-section--climax .ds-take-block::before{
   content:"THE BOTTOM LINE";display:block;
   font:600 .72rem/1 var(--font-mono,ui-monospace,monospace);
   letter-spacing:.18em;text-transform:uppercase;color:var(--acc);
   margin:0 0 18px;opacity:1;position:static;background:none;padding:0;border:0}
 
-/* ── INTEGRATION OVERRIDE 8: (a) the collapsed Sources block must stay inside
-   the canonical container, never bleed edge-to-edge; (b) the hero "five moves"
-   list was tiny/distorted — make it readable. */
+
 .ds-cites-details{max-width:var(--container);margin:var(--sp-7) auto 0}
 .hero-arc-title{font-size:var(--fs-mono);color:var(--ink-2);letter-spacing:.18em}
 .hero-arc-row{font-size:1.02rem;line-height:1.5;gap:20px;align-items:baseline}
 .hero-arc-row span:first-of-type{font-size:.82rem;color:var(--acc);font-weight:700}
 
-/* ── INTEGRATION OVERRIDE 9: consolidated finish pass (user #6–#17) ──────────
-   (a) section vertical spacing was too large (#9) — tighten the band so
-       sections read as one document, not slabs floating apart.
-   (b) the decorative .ds-motif-stack bars + dashed-hatch box is removed
-       EVERYWHERE, every size/variant (#6/#8/#9).
-   (c) ONE bullet rhythm with real breathing room in EVERY context — prose
-       lists, table cells, cellboxes, take-blocks, chart modals (#14/#16/#17).
-   (d) loose two-column bullet pairs sit in cards so they read as distinct
-       blocks, not random text on the page background (#7).
-   (e) chart-modal narrative is a spaced bullet list, never a dense blob
-       (#10/#15). */
+
 body>section{padding-top:56px;padding-bottom:56px}
 body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
 @media(min-width:1280px){body>section{padding-top:60px;padding-bottom:60px}}
@@ -1193,12 +1088,7 @@ body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
 .tjx-modal-list li::before{content:"\25B8";position:absolute;left:0;
   color:var(--acc);font-size:.9em;line-height:inherit}
 
-/* ── FLOW & CYCLE component (user: "proper flows, loops, highly visual,
-   reduce text", S5 GTM #1–#3). Built only from existing design tokens so it
-   sits in the same visual language as the cards/matrices. .ds-flow = a
-   left-to-right pipeline of step cards joined by accent arrows; .ds-flow--
-   paired = stacked before→after pairs; .ds-cycle = the same row wrapped in a
-   dashed loop bracket that returns to stage 1. */
+
 .ds-flow{display:flex;align-items:stretch;gap:0;margin:30px 0;
   overflow-x:auto;padding:4px 2px}
 .ds-flow-step{flex:1 1 0;min-width:228px;background:var(--bg-card,#fff);
@@ -1243,24 +1133,15 @@ body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
   .ds-flow-arrow{transform:rotate(90deg);flex-basis:30px}
   .ds-flow--paired .ds-flow-pair{flex-direction:column}}
 
-/* ── CONSISTENCY OVERRIDE 10: one visual language for the running "Bottom
-   line" takeaway. .ds-note (S5) and p.ds-take (S7 cards) play the same role
-   in two unrelated looks; give them a shared left-accent signature so the
-   mid-block takeaway reads identically site-wide (form only, no markup move). */
+
 .ds-take{border-left:2px solid var(--acc);padding-left:16px;
   border-top:0;margin-top:16px}
 .ds-take strong:first-child{color:var(--acc);font-weight:700;letter-spacing:.01em}
 .ds-note,.ds-take{color:var(--ink-2)}
 
-/* ── CONSISTENCY OVERRIDE 11 (LAST — wins the cascade): ONE token-locked
-   typographic scale by role + kill the hero dead-space void. Fixes the
-   recurring "font size inconsistent / too large somewhere, too small
-   somewhere / inconsistent across tables" and the ~128px top + ~128px
-   bottom hero emptiness (it was `.hero{padding:var(--sp-10) … var(--sp-10)}`
-   = 128px each side). No ad-hoc rem anywhere; every role → exactly one
-   token. This block also neutralises OVERRIDE 8's ad-hoc hero-arc sizes. */
 
-/* (a) HERO — hug content, kill the void, tighten the rhythm */
+
+
 .hero{padding:40px var(--gutter) 48px;display:block;overflow:visible;min-height:0}
 .hero-left{display:block;max-width:none}
 .hero > *,.hero-left > *{margin-left:0;margin-right:0}
@@ -1278,8 +1159,7 @@ body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
   font-size:var(--fs-mono);font-family:var(--font-mono)}
 .hero-fxnote{margin-top:20px;font-size:var(--fs-meta);line-height:1.55}
 
-/* (b) ONE table size across EVERY table variant (the "inconsistent across
-   tables" fix) — a single deliberate step (fs-sm) below prose */
+
 .ds-table td,.ds-table th,
 .ds-table.ds-matrix td,.ds-table.ds-matrix th,
 .ds-table.ds-dsp td,.ds-table.ds-dsp th,
@@ -1289,7 +1169,7 @@ body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
   font-size:var(--fs-sm);line-height:1.5}
 .ds-table td li,.ds-cellbox li,.ds-table .ds-list li{font-size:var(--fs-sm)}
 
-/* (c) prose-card text matches prose (one body size), labels one mono size */
+
 .ds-flow-step li,.ds-boxed li,.ds-take-block li,.ds-take-block p,
 .ds-list li,.ds-sub,.ds-prose,.tjx-modal-list li{font-size:var(--fs-body)}
 .ds-flow-t{font-size:var(--fs-h3);line-height:1.3}
@@ -1297,12 +1177,7 @@ body>section.ds-section--climax-wrap{padding-top:56px;padding-bottom:56px}
 .ds-kicker{font-size:var(--fs-mono)}
 .ds-qual,.ds-qual.ds-co{font-size:var(--fs-meta)}
 
-/* ── OVERRIDE 12 — FINAL ENFORCED FONT FRAMEWORK (single source of truth).
-   `!important` so every role beats the climax/lead title variants, the
-   assemble-scoped per-section table CSS (fs-xs cells), and the .54rem tag
-   rules. One token per role, the whole site, no exceptions. Schema @1512:
-   hero 54 · title 35 · h2 24 · h3/flow-t 19 · lede 19.5 · body 17 ·
-   table-cell 15 · meta/tag 12.5 · mono/eyebrow 11.5 · cite 10.6. */
+
 .ds-title,.ds-section--climax .ds-title,.ds-section--lead .ds-title,
 body>section h1:not(.hero h1){font-size:var(--fs-title)!important;line-height:1.08!important}
 .hero h1{font-size:var(--fs-hero)!important}
@@ -1329,7 +1204,7 @@ body>section h1:not(.hero h1){font-size:var(--fs-title)!important;line-height:1.
 .ds-flow-arrow{font-size:var(--fs-h2)!important}
 .tjx-marker{font-size:var(--fs-mono)!important}
 
-/* ── NAV: 7 section tiles + hover-reveal subsection dropdowns (user #6) */
+
 .snav{display:flex;align-items:center;gap:18px;flex-wrap:nowrap}
 .snav .brand{flex:0 0 auto}
 .snav-tiles{display:flex;align-items:center;gap:2px;flex:1;flex-wrap:nowrap;
@@ -1360,10 +1235,7 @@ html{scroll-behavior:smooth}
 @media(max-width:900px){.snav-sub{position:static;display:none;box-shadow:none;border:0;min-width:0}
   .snav-tile:hover .snav-sub{display:none}}
 
-/* ── DIAGRAM-QUALITY UPGRADE (user #8): .ds-flow / .ds-cycle become real
-   system diagrams — a connecting rail through the pipeline, elevated nodes,
-   a highlighted payoff node, and a TRUE closed loop with a return arc and a
-   prominent ↺ hub. Layout/визуал only; fonts stay schema-locked. */
+
 .ds-flow{position:relative;align-items:stretch;gap:0;padding:8px 2px 10px}
 .ds-flow::before{content:"";position:absolute;left:24px;right:24px;top:50%;
   height:2px;transform:translateY(-50%);
@@ -1411,11 +1283,7 @@ html{scroll-behavior:smooth}
   .ds-flow-arrow{transform:rotate(90deg)}
   .ds-cycle-return{border:2px dashed var(--acc);border-radius:16px;margin-top:10px}}
 
-/* ── CYCLE v2 — the flywheel as a genuine closed-loop system diagram
-   (user: real loops/cycles, not boxes+arrows). The whole component reads as
-   one circuit: nodes flow left→right across the top, then a sweeping return
-   path carries back along the bottom into node 1, with a glowing engine hub.
-   CSS-only, token-locked fonts (OVERRIDE 12 wins), reduced-motion safe. */
+
 .ds-cycle{position:relative;margin:36px 0;padding:22px 18px 0;
   border:1.5px solid rgba(13,148,136,.34);border-radius:22px;
   background:linear-gradient(180deg,rgba(13,148,136,.045),transparent 60%)}
@@ -1451,15 +1319,9 @@ html{scroll-behavior:smooth}
   .ds-cycle-row{flex-direction:column}
   .ds-cycle-return{flex-direction:row;border-radius:14px;margin:10px 2px 14px;
     padding-left:44px}}
-/* ── BOX-FORMATTING AUTHORITY (final, wins cascade) — fixes the recurring
-   defects: narrow super-tall cards, zero vertical spacing between blocks,
-   text overflowing the box, the zebra return strip, and the shock/qual
-   editorial text labels. LAYOUT ONLY — no font-size (OVERRIDE 12 stays the
-   single font authority); the ◆ shock glyph (li.shock::before) is untouched. */
 
-/* 1 · lone / few cards must be readable-WIDE, not a quarter-page ribbon two
-   pages tall. auto-fit collapses empty tracks so one card spans full width;
-   min(100%,…) stops any cell overflowing on narrow viewports. */
+
+
 .ds-grid-cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));
@@ -1467,10 +1329,7 @@ html{scroll-behavior:smooth}
 .ds-grid-cards > .ds-card{min-width:0;height:auto}
 .ds-card,.ds-card *{overflow-wrap:anywhere;word-break:break-word}
 
-/* 2 · flow pipelines: WRAP into readable rows instead of squeezing into
-   skinny vertical ribbons; real horizontal + vertical gaps; no h-scroll.
-   The decorative centre rail assumed one un-wrapped row — kill it so it
-   can't slash through stacked rows. */
+
 .ds-flow{display:flex;flex-wrap:wrap;align-items:stretch;
   gap:18px 14px;margin:34px 0;overflow:visible;padding:4px 0}
 .ds-flow::before,.ds-cycle-row::before{content:none!important;display:none!important}
@@ -1479,17 +1338,13 @@ html{scroll-behavior:smooth}
 .ds-flow-step,.ds-flow-step *{overflow-wrap:anywhere;word-break:break-word;min-width:0}
 .ds-flow-arrow{flex:0 0 auto;align-self:center;margin:0 2px}
 
-/* 3 · before→after pairs: each side stays readable-wide, the pair wraps on
-   narrow, and there is genuine vertical spacing BETWEEN pairs (the #26/#28
-   "no spacing between blocks" report). */
+
 .ds-flow--paired{display:flex;flex-direction:column;gap:22px;overflow:visible;margin:34px 0}
 .ds-flow--paired .ds-flow-pair{display:flex;flex-wrap:wrap;align-items:stretch;
   gap:14px;margin:0}
 .ds-flow--paired .ds-flow-step{flex:1 1 320px;min-width:min(100%,300px)}
 
-/* 4 · the flywheel reads as ONE genuine closed loop: nodes flow L→R across
-   the top, a clean solid return bar (◄) sweeps back into the ↺ engine hub.
-   Zebra repeating-gradient strip + its animation fully removed (#20/#21). */
+
 .ds-cycle{position:relative;margin:36px 0;padding:22px 18px 18px;
   border:1.5px solid rgba(13,148,136,.34);border-radius:22px;
   background:linear-gradient(180deg,rgba(13,148,136,.045),transparent 60%)}
@@ -1507,23 +1362,16 @@ html{scroll-behavior:smooth}
   transform:translateY(-50%);color:var(--acc);line-height:1}
 .ds-cycle-return,.ds-cycle-return *{overflow-wrap:anywhere;word-break:break-word}
 
-/* 5 · #23/#24 — hide the editorial text pills (SHOCK EVENT / FORCING MOVE /
-   "reported and contested" qualifiers); KEEP the ◆ glyph and the company
-   chips (.ds-qual.ds-co). */
+
 .ds-shock-tag,.ds-qual:not(.ds-co){display:none!important}
 
-/* 6 · global safety net: no inline source/label string may push text out of
-   any box into the white margin (#27). */
+
 .ds-section td,.ds-section li,.ds-section p,.ds-section .ds-card,
 .ds-flow-step,.ds-cycle-return{overflow-wrap:anywhere;word-break:break-word}
 
-/* ── FLOW/CYCLE CONSISTENCY AUTHORITY (final) — user: every step cell in a
-   flow/cycle must look IDENTICAL (no purple dot, no special border on the
-   last/key cell); the loop-back return bar must be removed; a flow inside a
-   card must read as a clean vertical pipeline, not a broken sideways one. */
 
-/* 1 · kill the .is-key / cycle-last-child differential — same border, shadow
-   and teal node dot as every other step (Images #32, #35). */
+
+
 .ds-flow-step.is-key,
 .ds-cycle-row .ds-flow-step:last-child{
   border:1px solid var(--rule)!important;
@@ -1533,33 +1381,21 @@ html{scroll-behavior:smooth}
   background:var(--acc)!important;
   box-shadow:0 0 0 4px var(--bg-card,#fff)!important}
 
-/* 2 · remove the loop-back return bar entirely (the "Each turn widens the
-   lead → 01" ↺ card) — the cycle now reads as a clean step row (Image #35). */
+
 .ds-cycle-return{display:none!important}
 
-/* 3 · a .ds-flow inside a card is too narrow for a horizontal pipeline — make
-   it a vertical sequence with the connector arrow pointing DOWN between
-   steps; the last step has no trailing arrow (correct end-of-sequence).
-   Fixes the "arrows point sideways into nothing" break (Image #31). */
+
 .ds-card .ds-flow{flex-direction:column;flex-wrap:nowrap;gap:14px;margin:18px 0 0}
 .ds-card .ds-flow::before{content:none!important;display:none!important}
 .ds-card .ds-flow .ds-flow-step{flex:1 1 auto;min-width:0;width:100%}
 .ds-card .ds-flow .ds-flow-arrow{transform:rotate(90deg);align-self:center;
   margin:2px auto}
 
-/* ── FLOW LADDER LAYOUT AUTHORITY (final) — user spec (Image #38): "four
-   cards sequentially from left to right". Standalone .ds-flow and the
-   .ds-cycle step row render as EQUAL fixed-width cards in ONE row; if the
-   row is wider than the container it scrolls horizontally (the affordance
-   already used for the deep-dive tables) — NO wrap, so the last card can
-   never drop to its own full-width line (kills the broken 3+1 / giant
-   tall-thin cards in Images #35/#36/#38). ≤760px stacks vertically. */
+
 .ds-flow:not(.ds-flow--paired){
   display:flex!important;flex-wrap:nowrap!important;overflow-x:auto;
   align-items:stretch;gap:14px;margin:24px 0 0;padding:4px 0 8px}
-/* GROW to fill the row so a 3-5 step flow uses the full container width
-   (wide + short) instead of narrow 240px ribbons 900px+ tall (Image #36);
-   min 240 keeps a long flow scrollable rather than crushed. */
+
 .ds-flow:not(.ds-flow--paired) > .ds-flow-step{
   flex:1 1 240px!important;min-width:240px;width:auto;max-width:none}
 .ds-flow:not(.ds-flow--paired) > .ds-flow-arrow{flex:0 0 auto;align-self:center}
@@ -1573,8 +1409,7 @@ html{scroll-behavior:smooth}
   .ds-flow:not(.ds-flow--paired) > .ds-flow-step,
   .ds-cycle-row > .ds-flow-step{flex:1 1 auto!important;width:100%}}
 
-/* in-card flows MUST stay vertical (a card is too narrow for a row) — re-
-   asserted last with !important so cascade order can't flip it back. */
+
 .ds-card .ds-flow,.ds-v .ds-flow{
   display:flex!important;flex-direction:column!important;
   flex-wrap:nowrap!important;overflow-x:visible!important;gap:14px;margin:18px 0 0}
@@ -1583,14 +1418,7 @@ html{scroll-behavior:smooth}
 .ds-card .ds-flow > .ds-flow-arrow,.ds-v .ds-flow > .ds-flow-arrow{
   transform:rotate(90deg);align-self:center;margin:2px auto}
 
-/* ── TABLE SCROLL AUTHORITY (PRIME DIRECTIVE, FINAL — wins all) — user's
-   definitive spec: a table NEVER scrolls vertically and NO individual cell
-   ever scrolls (vertical OR horizontal); every cell shows its ENTIRE content,
-   tall enough AND wide enough. The ONLY scroll a table may have is ONE
-   table-level HORIZONTAL scrollbar on the wrap, for the wide-column spread.
-   Compactness is achieved by WIDE columns (less wrapping ⇒ shorter rows),
-   never by capping cell height. Supersedes every earlier table rule
-   (OVERRIDE 4 + the prior fit-one-screen cap). ds-grid dots exempt. */
+
 .ds-table-wrap,
 .ds-table-wrap:has(table.ds-dsp),
 .ds-table-wrap:has(table.ds-matrix),
@@ -1599,15 +1427,8 @@ html{scroll-behavior:smooth}
 .ds-table-wrap:has(table.ds-grid){
   max-height:none!important;overflow-x:auto!important;overflow-y:visible!important;
   overscroll-behavior-x:contain}
-/* WIDE columns for TEXT tables only — each prose cell wide enough that its
-   full content fits in a few lines (short rows ⇒ compact table); table goes
-   wide and the ONE table-level horizontal scrollbar handles the spread.
-   ds-stackmap is a MARKER/dot grid — it must stay COMPACT (a 420px dot-cell
-   turns a 23-company map into a ~10,000px empty expanse — "all data
-   missing"); ds-grid (sector dot-matrix) likewise stays at its base size. */
-/* The wide 420px rule must NEVER touch the first (label) column — only real
-   DATA cells. Excluding .ds-rowlbl/.ds-corner here is what stopped the SECTOR
-   column rendering at a useless 420px (it was outranking the narrow rule). */
+
+
 .ds-table.ds-matrix:not(.ds-grid) td:not(.ds-rowlbl):not(.ds-corner),
 .ds-table.ds-matrix:not(.ds-grid) th:not(.ds-rowlbl):not(.ds-corner),
 .ds-table.ds-dsp td:not(.ds-rowlbl):not(.ds-corner),
@@ -1616,23 +1437,17 @@ html{scroll-behavior:smooth}
 .ds-table.ds-deepdive th:not(.ds-rowlbl):not(.ds-corner){
   min-width:420px!important;width:420px!important;vertical-align:top;
   white-space:normal!important}
-/* MARKER stack map: compact data columns for the logo+name header and the
-   centred 11px ownership dot (first label column excluded — handled below). */
+
 .ds-table.ds-stackmap td:not(.ds-rowlbl):not(.ds-corner),
 .ds-table.ds-stackmap th:not(.ds-rowlbl):not(.ds-corner){
   min-width:150px!important;width:150px!important;
   text-align:center;vertical-align:middle;white-space:normal}
-/* FIRST (label/corner) COLUMN — site-wide: only as wide as the sector/row
-   words need, wrapping to 2 lines is fine; never the wasteful 420px. One
-   tight content-hugging width for every table. */
+
 .ds-table th.ds-rowlbl,.ds-table td.ds-rowlbl,
 .ds-table .ds-rowlbl,.ds-table thead th.ds-corner,.ds-table .ds-corner{
   min-width:0!important;width:210px!important;max-width:230px!important;
   white-space:normal!important;vertical-align:top}
-/* NO cell scroll of any kind — every cell + its TEXT wrapper shows full
-   natural-height content; nothing inside a table clips or scrolls. Scoped to
-   text-content wrappers ONLY — never `td > *` blanket and never height:auto,
-   which would collapse fixed-size ●/○ marker spans (ds-stackmap/ds-grid). */
+
 .ds-table:not(.ds-grid) tbody td,
 .ds-table:not(.ds-grid) tbody td > ul,
 .ds-table:not(.ds-grid) tbody td > ol,
@@ -1643,10 +1458,7 @@ html{scroll-behavior:smooth}
   max-height:none!important;
   overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important}
 .ds-table:not(.ds-grid) thead th{vertical-align:bottom}
-/* sticky row-label + corner cells MUST be fully opaque so horizontally
-   scrolled body cells never bleed through (the SUPPLY-row transparency bug:
-   its tint was rgba(...,.035)). Single opaque surface for all rows — the
-   coloured left accent bar still encodes demand/supply/policy. */
+
 .ds-table .ds-rowlbl,
 .ds-table thead th.ds-corner,
 .ds-table tbody th.ds-rowlbl.demand,
@@ -1656,19 +1468,9 @@ html{scroll-behavior:smooth}
   position:sticky;left:0;z-index:2}
 .ds-table thead th.ds-corner{z-index:4}
 
-/* ── INTEGRATION OVERRIDE 13: live-audit defect pass (cascade-final) ──────────
-   Fixes four grounded defects found in a 390px + desktop live audit. LAYOUT +
-   canonical-style + legibility only. Reuses existing tokens; no new custom
-   properties; no reordering/deleting of any rule above; OVERRIDE 12 stays the
-   font authority for everything it already names — this block only raises the
-   four sub-caption items it does NOT name. */
 
-/* 13·1 — P1 MOBILE NAV (≤900px): the tile row was laid off-canvas (x≈−281)
-   and "03 · Imperative" overlapped the brand by 51px because .snav-tiles had
-   no internal scroll and .snav let it overflow the page. Clip the bar, give
-   the tile row its own horizontal scroll, pin the brand so it can't be pushed
-   or overlapped. All six links stay reachable; page h-overflow = 0 @390px.
-   Desktop (≥901px) is untouched (rules live inside the ≤900px query). */
+
+
 @media(max-width:900px){
   .snav{overflow:hidden;flex-wrap:nowrap;gap:14px}
   .snav .brand{flex:0 0 auto;white-space:nowrap}
@@ -1678,27 +1480,15 @@ html{scroll-behavior:smooth}
     -webkit-overflow-scrolling:touch;justify-content:flex-start}
 }
 @media(max-width:560px){
-  /* tighten the brand footprint so the tile row keeps more scroll runway */
+  
   .snav{gap:10px;padding-left:18px;padding-right:18px}
   .snav .brand{letter-spacing:.04em}
 }
 
-/* 13·2 — P2 ORPHAN GRID CARD (desktop): a trailing odd card sat alone in a
-   2-col grid leaving a ~547px empty quadrant. Mirror of the existing s7
-   full-width mechanism (13·1 box-authority `.ds-grid-cards` uses auto-fit so
-   a lone card already spans the row) — make that explicit for any 2-col
-   render too: a last child that is in an odd position spans both columns.
-   Only fires on odd-count grids → even-count grids are unaffected. */
+
 .ds-grid-cards > *:last-child:nth-child(odd){grid-column:1/-1}
 
-/* 13·3 — P2 COLLAPSIBLES → CANONICAL CONTAINER PRIME DIRECTIVE. All 10
-   <details class="ds-details"> (incl. the per-section .ds-cites-details
-   sources dropdown, which keeps its own max-width/summary-colour rules above)
-   carried an ad-hoc 1px grey border + grey "+ EXPAND" pill. Restyle to the
-   single canonical collapsible: signature-teal 2px border, 14px radius, soft
-   teal shadow, white bg, and a green "Click to expand"/"Click to collapse"
-   pill. Tokens reused: --acc (signature teal), --bg-card, --r-pill, the
-   site's own teal RGB (3,108,100) for the soft shadow (matches --acc). */
+
 .ds-details{
   background:var(--bg-card)!important;
   border:2px solid var(--acc)!important;
@@ -1715,17 +1505,25 @@ html{scroll-behavior:smooth}
 }
 .ds-details[open]>summary::after{content:"Click to collapse"!important}
 
-/* 13·4 — P3 SUB-LEGIBLE TYPE: four items sat at 9.6–9.92px, below the site's
-   caption tier. Raise to the existing caption token (--fs-meta ≈ 12.5px;
-   .ds-tag pill → --fs-mono ≈ 11.5px, still ≥11px) and darken the low-contrast
-   greys (--ink-3/--text-dim) to the caption-grey token (--ink-2) so they read
-   at the larger size. .ds-src/.n/.dom citation chips are intentionally NOT
-   touched (they keep --fs-cite). */
+
 .ds-card-type{font-size:var(--fs-meta)!important;color:var(--ink-2)!important}
 .ds-tag{font-size:var(--fs-mono)!important}
 .ds-table.ds-stackmap tbody th.ds-rowlbl .ds-rl-sub{
   font-size:var(--fs-meta)!important;color:var(--ink-2)!important}
 .tjx-mtip{font-size:var(--fs-meta)!important}
+
+
+.ds-cites-details{
+  border:0!important;box-shadow:none!important;
+  background:transparent!important;border-radius:0!important;
+  padding-left:0!important;padding-right:0!important;
+}
+.ds-flow--quad{
+  display:grid!important;grid-template-columns:1fr 1fr;
+  gap:var(--sp-4);overflow:visible;margin:var(--sp-5) 0;padding:0;
+}
+.ds-flow--quad .ds-flow-arrow{display:none}
+.ds-flow--quad .ds-flow-step{min-width:0;padding:18px 20px;gap:8px}
 
 
 </style>
@@ -3628,7 +3426,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
 
   
   <p class="ds-eyebrow" style="margin-top:var(--sp-6)">The four steps that let one win repeat</p>
-  <div class="ds-flow">
+  <div class="ds-flow ds-flow--quad">
     <div class="ds-flow-step">
       <span class="ds-flow-n">STEP 01</span>
       <p class="ds-flow-t">Win a government customer first</p>
