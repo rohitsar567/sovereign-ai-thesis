@@ -186,9 +186,26 @@
     /* extra gutter so the rotated Y title + X label fit without overlapping ticks */
     var M = { t: 46, r: 26, b: xTitle ? 64 : 46, l: yTitle ? 86 : 64 };
 
+    /* Responsive canvas sizing.
+       DESKTOP (>=901px container width): unchanged — height = cssW * 0.34
+       capped at 360, exactly as before, so the >=901px render is byte-for-byte
+       identical to the prior behaviour.
+       NARROW (<901px, e.g. a 390px phone where the wrap is ~300px): the old
+       linear `cssW * 0.34` collapsed the canvas to ~102px — shorter than the
+       46+64 axis margins themselves — crushing the 0-250 Y axis, 14 X-year
+       labels, curve, 8 markers, axis titles and legend into illegible blobs.
+       Below 901px we (a) use a taller aspect ratio (0.66) so the chart grows
+       upward as it narrows, and (b) clamp to a MIN_H floor of 260px so it can
+       never fall below a legible height at phone widths. The plot box
+       (cssH - M.t - M.b) therefore stays comfortably positive at 390px. */
+    var MIN_H = 260, DESKTOP_BP = 901;
+    function calcCssH(cssW) {
+      if (cssW >= DESKTOP_BP) return Math.min(Math.round(cssW * 0.34), 360); /* desktop: unchanged */
+      return Math.max(MIN_H, Math.round(cssW * 0.66));                       /* narrow: taller ratio + floor */
+    }
     function draw() {
       var dpr = window.devicePixelRatio || 1, cssW = wrap.clientWidth || 900,
-          cssH = Math.min(Math.round(cssW * 0.34), 360);
+          cssH = calcCssH(cssW);
       canvas.style.width = cssW + "px"; canvas.style.height = cssH + "px";
       canvas.width = cssW * dpr; canvas.height = cssH * dpr;
       var ctx = canvas.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

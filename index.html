@@ -1647,6 +1647,77 @@ html{scroll-behavior:smooth}
   position:sticky;left:0;z-index:2}
 .ds-table thead th.ds-corner{z-index:4}
 
+/* ── INTEGRATION OVERRIDE 13: live-audit defect pass (cascade-final) ──────────
+   Fixes four grounded defects found in a 390px + desktop live audit. LAYOUT +
+   canonical-style + legibility only. Reuses existing tokens; no new custom
+   properties; no reordering/deleting of any rule above; OVERRIDE 12 stays the
+   font authority for everything it already names — this block only raises the
+   four sub-caption items it does NOT name. */
+
+/* 13·1 — P1 MOBILE NAV (≤900px): the tile row was laid off-canvas (x≈−281)
+   and "03 · Imperative" overlapped the brand by 51px because .snav-tiles had
+   no internal scroll and .snav let it overflow the page. Clip the bar, give
+   the tile row its own horizontal scroll, pin the brand so it can't be pushed
+   or overlapped. All six links stay reachable; page h-overflow = 0 @390px.
+   Desktop (≥901px) is untouched (rules live inside the ≤900px query). */
+@media(max-width:900px){
+  .snav{overflow:hidden;flex-wrap:nowrap;gap:14px}
+  .snav .brand{flex:0 0 auto;white-space:nowrap}
+  .snav-tiles{
+    flex:1 1 auto;min-width:0;flex-wrap:nowrap;
+    overflow-x:auto;overflow-y:visible;
+    -webkit-overflow-scrolling:touch;justify-content:flex-start}
+}
+@media(max-width:560px){
+  /* tighten the brand footprint so the tile row keeps more scroll runway */
+  .snav{gap:10px;padding-left:18px;padding-right:18px}
+  .snav .brand{letter-spacing:.04em}
+}
+
+/* 13·2 — P2 ORPHAN GRID CARD (desktop): a trailing odd card sat alone in a
+   2-col grid leaving a ~547px empty quadrant. Mirror of the existing s7
+   full-width mechanism (13·1 box-authority `.ds-grid-cards` uses auto-fit so
+   a lone card already spans the row) — make that explicit for any 2-col
+   render too: a last child that is in an odd position spans both columns.
+   Only fires on odd-count grids → even-count grids are unaffected. */
+.ds-grid-cards > *:last-child:nth-child(odd){grid-column:1/-1}
+
+/* 13·3 — P2 COLLAPSIBLES → CANONICAL CONTAINER PRIME DIRECTIVE. All 10
+   <details class="ds-details"> (incl. the per-section .ds-cites-details
+   sources dropdown, which keeps its own max-width/summary-colour rules above)
+   carried an ad-hoc 1px grey border + grey "+ EXPAND" pill. Restyle to the
+   single canonical collapsible: signature-teal 2px border, 14px radius, soft
+   teal shadow, white bg, and a green "Click to expand"/"Click to collapse"
+   pill. Tokens reused: --acc (signature teal), --bg-card, --r-pill, the
+   site's own teal RGB (3,108,100) for the soft shadow (matches --acc). */
+.ds-details{
+  background:var(--bg-card)!important;
+  border:2px solid var(--acc)!important;
+  border-radius:14px!important;
+  box-shadow:0 2px 12px rgba(3,108,100,.08)!important;
+  overflow:hidden;
+}
+.ds-details>summary::after{
+  content:"Click to expand"!important;
+  color:#fff!important;background:var(--acc)!important;
+  font-weight:700!important;
+  padding:4px 10px!important;border-radius:6px!important;
+  box-shadow:0 1px 3px rgba(3,108,100,.20)!important;
+}
+.ds-details[open]>summary::after{content:"Click to collapse"!important}
+
+/* 13·4 — P3 SUB-LEGIBLE TYPE: four items sat at 9.6–9.92px, below the site's
+   caption tier. Raise to the existing caption token (--fs-meta ≈ 12.5px;
+   .ds-tag pill → --fs-mono ≈ 11.5px, still ≥11px) and darken the low-contrast
+   greys (--ink-3/--text-dim) to the caption-grey token (--ink-2) so they read
+   at the larger size. .ds-src/.n/.dom citation chips are intentionally NOT
+   touched (they keep --fs-cite). */
+.ds-card-type{font-size:var(--fs-meta)!important;color:var(--ink-2)!important}
+.ds-tag{font-size:var(--fs-mono)!important}
+.ds-table.ds-stackmap tbody th.ds-rowlbl .ds-rl-sub{
+  font-size:var(--fs-meta)!important;color:var(--ink-2)!important}
+.tjx-mtip{font-size:var(--fs-meta)!important}
+
 
 </style>
 <script>
@@ -1814,7 +1885,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
     <p class="ds-card-type">Narrower plays &mdash; enter only where each rule set requires it</p>
     <div class="ds-row">
       <span class="ds-k">The opening per sector</span>
-      <div class="ds-v"><ul class="ds-list"><li><strong>Health</strong> — most sensitive data class under the DPDP Act 2023; ABDM is government-owned (<strong>≈797M ABHA accounts, ≈650M linked records</strong>), so inference must run in India (<a class="ds-src" href="https://indiamedtoday.com/abha-progress-report-79-71-crore-accounts-registered-and-65-09-crore-health-records-linked/" target="_blank" rel="noopener">IndiaMedToday — MoHFW Lok Sabha, 28 Jul 2025</a>).</li><li><strong>Telecom &amp; Energy</strong> — both legally Critical Information Infrastructure under IT Act S.70A (NCIIPC), so a foreign cloud model on call or grid data is barred (<a class="ds-src" href="https://www.trai.gov.in/sites/default/files/2025-07/YIR_08072025_0.pdf" target="_blank" rel="noopener">TRAI Yearly Performance Indicators 2024-25</a>; <a class="ds-src" href="https://www.downtoearth.org.in/energy/india-to-deploy-ai-for-real-time-grid-risk-detection-cyber-security-and-market-surveillance" target="_blank" rel="noopener">Down To Earth — Grid India</a>).</li><li><strong>Defence</strong> — classified and air-gapped, with <strong>75%</strong> of capital acquisition reserved for Indian industry (<a class="ds-src" href="https://inc42.com/features/indias-defence-ai-reality-check/" target="_blank" rel="noopener">Inc42 — India's defence-AI reality check</a>).</li><li><strong>Transport &amp; Logistics</strong> — Critical Information Infrastructure under IT Act S.70A (NCIIPC's critical-sector list names Transport); ports, aviation and the State-owned ULIP rail bar a foreign-cloud model, against a ≈US$286B logistics-cost pool (<a class="ds-src" href="https://en.wikipedia.org/wiki/National_Critical_Information_Infrastructure_Protection_Centre" target="_blank" rel="noopener">NCIIPC — critical sectors</a>; <a class="ds-src" href="https://www.outlookbusiness.com/economy-and-policy/indias-logistics-cost-pegged-at-797-pc-of-gdp-in-first-systematic-study" target="_blank" rel="noopener">Outlook Business — DPIIT-NCAER, logistics 7.97% of GDP</a>).</li><li>The narrow point-solution niches are filling up; the only lasting way in is the model-and-software layer each rule set requires, not the whole sector.</li></ul></div>
+      <div class="ds-v"><ul class="ds-list"><li><strong>Health</strong> — most sensitive data class under the DPDP Act 2023; ABDM is government-owned (<strong>≈797M ABHA accounts, ≈650M linked records</strong>), so inference must run in India (<a class="ds-src" href="https://indiamedtoday.com/abha-progress-report-79-71-crore-accounts-registered-and-65-09-crore-health-records-linked/" target="_blank" rel="noopener">IndiaMedToday — MoHFW Lok Sabha, 28 Jul 2025</a>).</li><li><strong>Telecom &amp; Energy</strong> — both legally Critical Information Infrastructure under IT Act S.70A (NCIIPC), so a foreign cloud model on call or grid data is barred (<a class="ds-src" href="https://www.trai.gov.in/sites/default/files/2025-07/YIR_08072025_0.pdf" target="_blank" rel="noopener">TRAI Yearly Performance Indicators 2024-25</a>; <a class="ds-src" href="https://www.downtoearth.org.in/energy/india-to-deploy-ai-for-real-time-grid-risk-detection-cyber-security-and-market-surveillance" target="_blank" rel="noopener">Down To Earth — Grid India</a>).</li><li><strong>Defence</strong> — classified and air-gapped, with <strong>75%</strong> of capital acquisition reserved for Indian industry (<a class="ds-src" href="https://inc42.com/features/indias-defence-ai-reality-check/" target="_blank" rel="noopener">Inc42 — India's defence-AI reality check</a>).</li><li><strong>Transport &amp; Logistics</strong> — Critical Information Infrastructure under IT Act S.70A (NCIIPC's critical-sector list names Transport); ports, aviation and the State-owned ULIP rail bar a foreign-cloud model, against a ≈US$286B logistics-cost pool (<a class="ds-src" href="https://www.orfonline.org/expert-speak/nciipc-its-evolving-framework" target="_blank" rel="noopener">ORF — NCIIPC critical sectors, IT Act S.70A</a>; <a class="ds-src" href="https://www.outlookbusiness.com/economy-and-policy/indias-logistics-cost-pegged-at-797-pc-of-gdp-in-first-systematic-study" target="_blank" rel="noopener">Outlook Business — DPIIT-NCAER, logistics 7.97% of GDP</a>).</li><li>The narrow point-solution niches are filling up; the only lasting way in is the model-and-software layer each rule set requires, not the whole sector.</li></ul></div>
     </div>
    </div>
 
@@ -1863,7 +1934,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
     </div>
     <div class="ds-row">
       <span class="ds-k">"Rented chips, so how is it sovereign?"</span>
-      <div class="ds-v"><ul class="ds-list"><li>Sovereignty is not in the chips; it is in the full-stack layer on top of them — developed, deployed and governed in India.</li><li>Inference runs in India under the DPDP Act, and the deployment sits inside India's binding security regime — CERT-In, NCIIPC, MeitY empanelment, the 2018 payments-data rule.</li><li>Anyone can rent compute; the regulated-sector deployment, data and governance layer cannot be rented, and a model governed in India is one layer of it and the flywheel accelerant.</li><li>The warning cases — Krutrim, CoRover — collapsed into reselling cloud or a thin wrapper; here sovereignty means renting honestly and winning on the full-stack layers above.</li></ul></div>
+      <div class="ds-v"><ul class="ds-list"><li>Sovereignty is not in the chips; it is in the full-stack layer on top of them — developed, deployed and governed in India.</li><li>Inference runs in India under the DPDP Act, and the deployment sits inside India's binding security regime — CERT-In, NCIIPC, MeitY empanelment, the 2018 payments-data rule.</li><li>Anyone can rent compute; the regulated-sector deployment, data and governance layer cannot be rented, and a model governed in India is one layer of it and the flywheel accelerant.</li><li>The warning case — Krutrim — collapsed into reselling cloud / a thin wrapper; here sovereignty means renting honestly and winning on the full-stack layers above.</li></ul></div>
     </div>
    </div>
 
@@ -2219,7 +2290,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">German ministries (PhariaAI pilots)</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">regulated EU enterprise</span></li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">UAE government</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Arabic speakers (Jais via Azure)</span></li><li><span class="ds-chip">open-weight ecosystem</span></li><li><a class="ds-src" href="https://blogs.microsoft.com/blog/2024/04/15/microsoft-and-g42-partner-to-accelerate-ai-innovation-in-uae-and-beyond/" target="_blank" rel="noopener">Microsoft — Jais distributed via Azure to Arabic speakers, Apr 2024</a></li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">Saudi public sector</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Arabic consumers (HUMAIN Chat)</span></li><li><a class="ds-src" href="https://english.alarabiya.net/News/saudi-arabia/2025/08/26/saudi-arabia-launches-humain-chat-first-conversational-arabic-ai-app-" target="_blank" rel="noopener">Al Arabiya — HUMAIN Chat Arabic consumer app launch, Aug 2025</a></li></ul></div></td>
-          <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">MUFG</span></li><li><span class="ds-chip">Daiwa</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Japan gov / defense (targeted 2026)</span></li><li><a class="ds-src" href="https://winbuzzer.com/2026/01/23/google-invests-sakana-ai-boost-gemini-japan-xcxwbn/" target="_blank" rel="noopener">Winbuzzer — multi-year MUFG Bank partnership, Jan 2026</a></li></ul></div></td>
+          <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">MUFG</span></li><li><span class="ds-chip">Daiwa</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Japan gov / defense (targeted 2026)</span></li><li><a class="ds-src" href="https://winbuzzer.com/2026/01/23/google-invests-sakana-ai-boost-gemini-japan-xcxwbn/" target="_blank" rel="noopener">Winbuzzer — Google invests in Sakana AI; reports multi-year MUFG Bank partnership, Jan 2026</a></li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Named customers</li><li><span class="ds-chip">Saudi SDAIA (Naver MOU — sovereign-AI export)</span></li><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Korean public sector</span></li><li><span class="ds-chip">domestic enterprise</span></li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Korean public sector</span></li><li><span class="ds-chip">domestic enterprise</span></li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li class="ds-grp">Sector classes</li><li><span class="ds-chip">Korean public sector</span></li><li><span class="ds-chip">domestic enterprise</span></li></ul></div></td>
@@ -3059,7 +3130,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
           <th class="ds-rowlbl">Telecom</th>
           <td>
             <ul class="ds-list">
-              <li>Statutory Critical Information Infrastructure under IT Act S.70A, with NCIIPC as nodal agency (<a class="ds-src" href="https://en.wikipedia.org/wiki/National_Critical_Information_Infrastructure_Protection_Centre" target="_blank" rel="noopener">NCIIPC — IT Act S.70A</a>).</li>
+              <li>Statutory Critical Information Infrastructure under IT Act S.70A, with NCIIPC as nodal agency (<a class="ds-src" href="https://www.orfonline.org/expert-speak/nciipc-its-evolving-framework" target="_blank" rel="noopener">ORF — NCIIPC critical sectors, IT Act S.70A</a>).</li>
               <li>Telecom carries every Indian's call/SMS/data metadata under DoT fraud-control tools — not handed to a foreign cloud model (<a class="ds-src" href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/oct/doc2025107659501.pdf" target="_blank" rel="noopener">PIB — Curbing Cyber Frauds, 7 Oct 2025</a>).</li>
               <li>TRAI is moving from complaint-based to proactive AI-driven spam and UCC detection, so this surveillance must be sovereign (<a class="ds-src" href="https://eservices.dot.gov.in/node/1195" target="_blank" rel="noopener">DoT — AI in telecom</a>).</li>
             </ul>
@@ -3107,7 +3178,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
           <th class="ds-rowlbl">Energy &amp; Utilities</th>
           <td>
             <ul class="ds-list">
-              <li>The empty row. The power grid is statutory Critical Information Infrastructure under IT Act S.70A (<a class="ds-src" href="https://en.wikipedia.org/wiki/National_Critical_Information_Infrastructure_Protection_Centre" target="_blank" rel="noopener">NCIIPC — IT Act S.70A</a>).</li>
+              <li>The empty row. The power grid is statutory Critical Information Infrastructure under IT Act S.70A (<a class="ds-src" href="https://www.orfonline.org/expert-speak/nciipc-its-evolving-framework" target="_blank" rel="noopener">ORF — NCIIPC critical sectors, IT Act S.70A</a>).</li>
               <li>Grid India calls grid AI "a core component of national security"; real-time SCADA and power-market surveillance cannot run on a foreign cloud model.</li>
               <li>The government is preparing a national CII AI assurance framework requiring explainable AI and human-in-loop — favouring auditable India-resident models (<a class="ds-src" href="https://www.downtoearth.org.in/energy/india-to-deploy-ai-for-real-time-grid-risk-detection-cyber-security-and-market-surveillance" target="_blank" rel="noopener">Down To Earth — Grid India CMD</a>).</li>
             </ul>
@@ -3199,7 +3270,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
           <th class="ds-rowlbl">Transportation &amp; Logistics</th>
           <td>
             <ul class="ds-list">
-              <li>NCIIPC's published critical-sector list — set under IT Act S.70A — names "Transport" explicitly, the same hook that makes Telecom and Energy sovereign (<a class="ds-src" href="https://en.wikipedia.org/wiki/National_Critical_Information_Infrastructure_Protection_Centre" target="_blank" rel="noopener">NCIIPC critical sectors</a>).</li>
+              <li>NCIIPC's published critical-sector list — set under IT Act S.70A — names "Transport" explicitly, the same hook that makes Telecom and Energy sovereign (<a class="ds-src" href="https://www.orfonline.org/expert-speak/nciipc-its-evolving-framework" target="_blank" rel="noopener">ORF — NCIIPC critical sectors, IT Act S.70A</a>).</li>
               <li>Aviation sits under the Bharatiya Vayuyan Adhiniyam 2024 (DGCA/BCAS/AAIB); shipping under the Merchant Shipping Act 2025; ports under the Major Port Authorities Act 2021 (<a class="ds-src" href="https://www.indiacode.nic.in/handle/123456789/20589" target="_blank" rel="noopener">India Code — BVA 2024</a>; <a class="ds-src" href="https://www.dgshipping.gov.in/writereaddata/News/202508251212088725453MerchantShippingAct,205.pdf" target="_blank" rel="noopener">DG Shipping — MSA 2025</a>; <a class="ds-src" href="https://shipmin.gov.in/sites/default/files/MPAACT2021.pdf" target="_blank" rel="noopener">MoPSW — MPAA 2021</a>).</li>
               <li>ULIP is a State-owned, API-gated logistics rail; passenger/consignor data is DPDP-restricted, so a foreign cloud model is inadmissible by construction (<a class="ds-src" href="https://www.ibef.org/news/unified-logistics-interface-platform-ulip-surpasses-100-crore-application-programming-interface-api-transactions-enabling-seamless-smart-and-sustainable-logistics" target="_blank" rel="noopener">IBEF / PIB — ULIP</a>).</li>
             </ul>
@@ -3375,7 +3446,7 @@ window.dsLogoFail=function(img){var s=document.createElement('span');s.className
         </tr>
         <tr>
           <th class="ds-rowlbl">Funding · State linkage</th>
-          <td><div class="ds-cellbox"><ul class="ds-list"><li>$41M seed + Series&nbsp;A, 6 Dec 2023 (Lightspeed, Peak XV, Khosla) (<a class="ds-src" href="https://techcrunch.com/2023/12/06/indias-sarvam-ai-raises-41-million-from-lightspeed-khosla-peak-xv/" target="_blank" rel="noopener">TechCrunch</a>).</li><li>First start-up selected under the IndiaAI Mission.</li><li>Highest compute subsidy so far: ~US$11.7M (₹98.68 cr) against a ~US$29.4M (₹246.71 cr) project.</li><li>4,096 NVIDIA H100 SXM for 6 months via Yotta (<a class="ds-src" href="https://www.tice.news/tice-dispatch/indiaai-mission-powers-sarvams-open-source-leap-in-ai-9501568" target="_blank" rel="noopener">TICE</a>; Business Today).</li><li>Total IndiaAI allocation ~US$29.4M (₹246.72 cr), second after BharatGen.</li><li>A ~US$300M round at a ~US$1.5B valuation — not closed, reported not confirmed <span class="ds-qual">Reported</span> (<a class="ds-src" href="https://www.outlookbusiness.com/deeptech/hcltech-sarvam-ai-300mn-funding-1-5bn-valuation" target="_blank" rel="noopener">Outlook Business</a>).</li></ul></div></td>
+          <td><div class="ds-cellbox"><ul class="ds-list"><li>$41M seed + Series&nbsp;A, 6 Dec 2023 (Lightspeed, Peak XV, Khosla) (<a class="ds-src" href="https://techcrunch.com/2023/12/06/indias-sarvam-ai-raises-41-million-from-lightspeed-khosla-peak-xv/" target="_blank" rel="noopener">TechCrunch</a>).</li><li>First start-up selected under the IndiaAI Mission.</li><li>Highest compute subsidy so far: ~US$11.7M (₹98.68 cr) against a ~US$29.4M (₹246.72 cr) project.</li><li>4,096 NVIDIA H100 SXM for 6 months via Yotta (<a class="ds-src" href="https://www.tice.news/tice-dispatch/indiaai-mission-powers-sarvams-open-source-leap-in-ai-9501568" target="_blank" rel="noopener">TICE</a>; Business Today).</li><li>Total IndiaAI allocation ~US$29.4M (₹246.72 cr), second after BharatGen.</li><li>A ~US$300M round at a ~US$1.5B valuation — not closed, reported not confirmed <span class="ds-qual">Reported</span> (<a class="ds-src" href="https://www.outlookbusiness.com/deeptech/hcltech-sarvam-ai-300mn-funding-1-5bn-valuation" target="_blank" rel="noopener">Outlook Business</a>).</li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li>A ~US$118M (₹988.6 cr) grant, announced Sep 2025.</li><li>The largest share of MeitY's ~US$179M (₹1,500 cr) IndiaAI 2025 allocation (BharatGen; <a class="ds-src" href="https://www.tribuneindia.com/news/business/indias-sovereign-ai-bharatgen-secures-rs-988-6-crore-under-indiaai-mission-receives-largest-share-of-meitys-rs-1500-crore-allocation" target="_blank" rel="noopener">The Tribune</a>).</li><li>Total IndiaAI support ~US$126M (₹1,058.52 cr), the largest of the 12-org cohort (<a class="ds-src" href="https://harro.com/2026/04/04/centre-funds-12-ai-projects-for-sovereign-models-bharatgen-gets-4x-the-next-highest-allocation-at-over-rs-1000-crore/" target="_blank" rel="noopener">Harro</a>).</li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li>IndiaAI Cohort 1 allocation ~US$21.1M (₹177.08 cr).</li><li>One of four start-up champions, with Sarvam, Gnani and Gan.ai (<a class="ds-src" href="https://harro.com/2026/04/04/centre-funds-12-ai-projects-for-sovereign-models-bharatgen-gets-4x-the-next-highest-allocation-at-over-rs-1000-crore/" target="_blank" rel="noopener">Harro</a>).</li></ul></div></td>
           <td><div class="ds-cellbox"><ul class="ds-list"><li>Non-profit, funded by Nilekani Philanthropies plus government and Bhashini collaborations.</li><li>No single figure disclosed.</li><li>Built IndicVoices with IIT Madras and Sarvam (<a class="ds-src" href="https://indiaai.gov.in/article/iit-madras-ai4bharat-and-sarvam-ai-launch-indicvoices-a-milestone-in-indian-speech-recognition" target="_blank" rel="noopener">AI4Bharat</a>).</li></ul></div></td>
